@@ -1,0 +1,199 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  @apply bg-[#090200];
+}
+
+body {
+  direction: rtl;
+  font-family: "Barlow Condensed", sans-serif;
+  color-scheme: dark;
+  @apply text-slate-300 bg-black;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+strong,
+table {
+  direction: rtl;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: #d80032;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 346.8 77.2% 49.8%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 20 14.3% 4.1%;
+    --foreground: 0 0% 95%;
+    --card: 24 9.8% 10%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 346.8 77.2% 49.8%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 85.7% 97.3%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 346.8 77.2% 49.8%;
+  }
+}
+
+.cut-viewport {
+  min-height: calc(100vh - 80px);
+}
+.cut-viewport-max {
+  max-height: calc(100vh - 80px);
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+video {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.embla {
+  overflow: hidden;
+}
+.embla__container {
+  display: flex;
+}
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+.grid-columns {
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(300px, 1fr)
+  );
+  gap: 20px;
+}
+
+.grid-columns-no-gap {
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(250px, 1fr)
+  );
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scale-in {
+  animation: scaleIn 8s ease 0s both infinite;
+}
+
+@keyframes scaleIn {
+  from {
+    scale: 1;
+  }
+  to {
+    scale: 1.2;
+  }
+}
+
+.bounce {
+  animation: MoveUpDown 2s linear infinite;
+}
+
+.arrow path {
+  animation: flash 4s ease-in-out 0s infinite both;
+}
+
+.scaler {
+  animation: scaler 4s ease-in-out 0s infinite both;
+}
+
+.ltr {
+  direction: ltr;
+}
+
+@keyframes MoveUpDown {
+  0%,
+  100% {
+    bottom: 0;
+  }
+  50% {
+    bottom: 20px;
+  }
+}
+
+@keyframes flash {
+  0%,
+  100% {
+    fill: #181818;
+  }
+  50% {
+    fill: white;
+    opacity: 1;
+  }
+}
+
+@keyframes scaler {
+  0%,
+  100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.1;
+  }
+}
