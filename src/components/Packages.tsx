@@ -22,6 +22,10 @@ const Packages = ({
     useGetSubServicePackagesQuery({
       id: subServiceID,
     })
+
+    console.log(useGetSubServicePackagesQuery({
+      id: subServiceID,
+    }))
   return (
     <div className="text-center">
       <ServicesSlider

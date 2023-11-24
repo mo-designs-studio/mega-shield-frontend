@@ -7,6 +7,9 @@ const authApi = apiSlice.injectEndpoints({
       query: () => ({
         url: "/users/me",
         credentials: "include",
+        headers: {
+          "Content-type": "application/json",
+        },
       }),
     }),
     login: builder.mutation<{ user: User }, LoginInfo>({
