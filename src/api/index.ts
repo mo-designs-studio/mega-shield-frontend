@@ -3,8 +3,8 @@ import axios from "axios";
 export const apiUrl = import.meta.env.VITE_SERVER_URL;
 
 export enum ContentType {
-    json = "application/json",
-    formData = "multipart/form-data"
+    JSON = "application/json",
+    FORM_DATA = "multipart/form-data"
 }
 
 export type HeadersContent = {
@@ -15,10 +15,11 @@ export type HeadersContent = {
 }
 export const createHeaders = (contentType: ContentType) => {
     const token = localStorage.getItem("access-token") && "Bearer " + localStorage.getItem("access-token");
+    const localeLang: string = localStorage.getItem("language") ?? "ar"
     const headersObject: HeadersContent = {
         "Accept": "application/json",
         "Content-Type": contentType,
-        "accept-language": localStorage.getItem("language") ?? "en",
+        "accept-language": localeLang,
       }
     const headers = {
       headers: headersObject
@@ -26,3 +27,25 @@ export const createHeaders = (contentType: ContentType) => {
     if (token) headers.headers["Authorization"] = token;
     return headers;
   };
+
+  export const createErrorResponse = (error: any) => {
+    const response = {
+      error: {
+        title: error.response
+          ? "error " + error.response.status
+          : "connection error",
+        text: error.response?.data?.message || error.message,
+      },
+      response: error.response || { status: null },
+    };
+    return response;
+  };
+  
+  const http = {
+    get: axios.get,
+    post: axios.post,
+    put: axios.put,
+    delete: axios.delete,
+  };
+  
+  export default http;
