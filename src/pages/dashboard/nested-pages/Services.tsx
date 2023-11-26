@@ -1,16 +1,14 @@
-import { useGetAllMainServicesQuery } from "@/app/api/ServicesApiSlice"
 import { NavLink, ServiceModal } from "@/components"
 import ContentTable from "@/components/Table"
 import { Route, Routes } from "react-router-dom"
 import SubServices from "./SubServices"
 import Bookings from "./Bookings"
 import Package from "./Package"
+import { useStatesStore } from "@/stateStore";
 
 const Services = () => {
-  const { data: mainServices, isLoading } =
-    useGetAllMainServicesQuery("")
+  const { mainServicesState } = useStatesStore();
 
-  if (isLoading) return "loading..."
 
   return (
     <div>
@@ -28,7 +26,7 @@ const Services = () => {
             <>
               <ServiceModal mode="add" withButton />
               <div className="overflow-x-scroll max-md:w-[90vw] mx-auto no-scroll">
-                {mainServices && (
+                {mainServicesState && (
                   <ContentTable
                     mode="main-services"
                     headers={[
@@ -37,7 +35,7 @@ const Services = () => {
                       "الصورة",
                       "الاصدار",
                     ]}
-                    items={mainServices.mainServices}
+                    items={mainServicesState}
                   />
                 )}
               </div>

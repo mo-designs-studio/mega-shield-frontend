@@ -108,19 +108,19 @@ const ServicesApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["mainServices"],
     }),
-    GetAllMainServices: builder.query<
-      { mainServices: MainService[]; count: number },
-      any
-    >({
-      query: () => ({
-        url: `/mainservices/allMainServices`,
-        credentials: "include",
-        headers: {
-          "Content-type": "application/json",
-        },
-      }),
-      providesTags: ["mainServices"],
-    }),
+    // GetAllMainServices: builder.query<
+    //   { mainServices: MainService[]; count: number },
+    //   any
+    // >({
+    //   query: () => ({
+    //     url: `/mainservices/allMainServices`,
+    //     credentials: "include",
+    //     headers: {
+    //       "Content-type": "application/json",
+    //     },
+    //   }),
+    //   providesTags: ["mainServices"],
+    // }),
     GetSubServices: builder.query<
       { services: Service[]; count: number },
       { id: string }
@@ -297,7 +297,7 @@ export const {
   useAddMainServiceMutation,
   useUpdateMainServiceMutation,
   useGetServiceByIDQuery,
-  useGetAllMainServicesQuery,
+  // useGetAllMainServicesQuery,
   useDeleteMainServiceMutation,
   useGetAllBookingsQuery,
   useToggleBookingStateToDoneMutation,

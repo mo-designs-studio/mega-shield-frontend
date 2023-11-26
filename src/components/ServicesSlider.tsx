@@ -1,11 +1,13 @@
 import useCarousel from "@/hooks/useCarousel"
 import { For } from "@dev-amr/react-sugartax"
 import { useEffect, useRef, useState } from "react"
+import { useStatesStore } from "@/stateStore";
+import { MainService } from "@/types";
+
 import {
-  useGetAllMainServicesQuery,
   useGetSubServicesQuery,
 } from "@/app/api/ServicesApiSlice"
-import { MainService } from "@/types"
+
 
 type ServicesProps = {
   setSubServiceID: React.Dispatch<
@@ -14,30 +16,29 @@ type ServicesProps = {
   subServiceID: string
 }
 
+
 const ServicesSlider = ({
   setSubServiceID,
   subServiceID,
 }: ServicesProps) => {
   const [filteredMainServices, setFilteredMainServices] =
     useState<MainService[]>([])
-  const { data: mainServices } =
-    useGetAllMainServicesQuery("")
-
+  
   const { next, page, prev } = useCarousel({
     time: 3000,
     pages: filteredMainServices.length,
     autoPlay: false,
   })
-
+  const { mainServicesState } = useStatesStore();
   useEffect(() => {
-    if (mainServices) {
-      const filtered = mainServices.mainServices.filter(
+    if (mainServicesState.length > 0) {
+      const filtered = mainServicesState.filter(
         item => !item.isAdditional
       )
 
       setFilteredMainServices(filtered)
     }
-  }, [mainServices])
+  }, [mainServicesState])
 
   return (
     <div className="relative">
@@ -48,9 +49,9 @@ const ServicesSlider = ({
             translate: `${100 * (page - 1)}%`,
           }}
         >
-          {mainServices && (
+          {mainServicesState && (
             <For each={filteredMainServices}>
-              {(item, i) => (
+              {(item: MainService, i) => (
                 <Slide
                   setSubServiceID={setSubServiceID}
                   subServiceID={subServiceID}

@@ -1,7 +1,7 @@
 import { StateCreator } from 'zustand';
 import { checkApiConnection, getAllMainServices } from "../api/endpoints";
 
-type LoadData = (payload?: {}, get?: Function | null) => Promise<void>;
+type LoadData = (payload?: {}, get?: Function ) => Promise<void>;
 
 export interface ApiHandlersSlice {
     loadInitData: LoadData,

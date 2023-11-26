@@ -5,14 +5,14 @@ import { Button } from "./ui/button";
 import { MoreDialog } from ".";
 import { Link } from "react-router-dom";
 import { useStatesStore } from "@/stateStore";
-import { MainServiceProps } from "@/types";
+import { MainService } from "@/types";
 
 const About = () => {
   const [percentage, setPercentage] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState("");
   const { mainServicesState } = useStatesStore();
-  console.log("mainServicesState fro About", mainServicesState);
+
 
   const { page, next, go } = useCarousel({
     time: 5000,
@@ -43,7 +43,7 @@ const About = () => {
       </div>
 
       {mainServicesState &&
-        mainServicesState.map((item: MainServiceProps, i) => (
+        mainServicesState.map((item: MainService, i) => (
           <Slide
             isOpen={isOpen}
             setContent={setContent}

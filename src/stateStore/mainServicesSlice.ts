@@ -1,10 +1,10 @@
 import { StateCreator } from 'zustand';
-import { MainServiceProps } from '@/types';
+import { MainServiceProps, MainService } from '@/types';
 
 
 
 export interface MainServicesSlice {
-    mainServicesState: MainServiceProps[],
+    mainServicesState: MainService[],
     setMainServicesState: (payload: {}) => Function
 }
 
