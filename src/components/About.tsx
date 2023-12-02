@@ -13,7 +13,6 @@ const About = () => {
   const [content, setContent] = useState("");
   const { mainServicesState } = useStatesStore();
 
-
   const { page, next, go } = useCarousel({
     time: 5000,
     pages: mainServicesState?.length,
@@ -78,12 +77,14 @@ type SlideProps = {
 };
 
 const Slide = ({ pageNumber, currentPageNumber, img, title, setIsOpen, setContent, description, isOpen }: SlideProps) => {
+  const serverdUrl = import.meta.env.VITE_SERVER_URL;
   useEffect(() => {
     if (pageNumber === currentPageNumber && !isOpen) setContent(description);
   }, [currentPageNumber, isOpen]);
+  const imgLink = serverdUrl + img;
   return (
     <div
-      style={{ backgroundImage: `url("${img}")` }}
+      style={{ backgroundImage: `url(${imgLink})` }}
       className={`absolute w-full h-full z-40 bg-cover bg-center bg-no-repeat flex items-center justify-center
       ${pageNumber === currentPageNumber ? "bottom-0" : "-bottom-full delay-500"}
       transition-all duration-500`}>

@@ -1,5 +1,5 @@
 import { StateCreator } from 'zustand';
-import { MainServiceProps, MainService } from '@/types';
+import { MainService } from '@/types';
 
 
 

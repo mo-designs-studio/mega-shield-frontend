@@ -3,7 +3,7 @@ import spots from "/car-spots.png"
 export enum SERVICES {
   thermal = "العازل الحرارى",
   nano = " حماية النانو سيراميك ",
-  protect = "افالم حماية السيارة",
+  protect = "افلام حماية السيارة",
   polish = "تلميع ميجا االحترافى",
   care = "العناية الفائقة",
   offers = "الباقات والعروض",

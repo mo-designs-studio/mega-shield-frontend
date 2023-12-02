@@ -58,9 +58,17 @@ export type CloudinaryImage = {
 
 export type MainServiceProps = {
   name: string
-  photo: string
   description: string
-  isAdditional: boolean
+
+}
+export interface NewMainService extends MainServiceProps {
+  image: File
+  isAdditional?: boolean
+}
+export interface UpdatedMainService extends MainServiceProps {
+  image?: File
+  isAdditional?: boolean
+  id?: string
 }
 
 export type MainService = {

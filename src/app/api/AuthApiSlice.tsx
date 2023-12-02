@@ -28,25 +28,25 @@ const authApi = apiSlice.injectEndpoints({
         "subServices",
       ],
     }),
-    register: builder.mutation<
-      { user: User },
-      RegisterInfo
-    >({
-      query: info => ({
-        url: "/auth/register",
-        method: "POST",
-        body: JSON.stringify(info),
-        credentials: "include",
-        headers: {
-          "Content-type": "application/json",
-        },
-      }),
-    }),
+    // register: builder.mutation<
+    //   { user: User },
+    //   RegisterInfo
+    // >({
+    //   query: info => ({
+    //     url: "/auth/register",
+    //     method: "POST",
+    //     body: JSON.stringify(info),
+    //     credentials: "include",
+    //     headers: {
+    //       "Content-type": "application/json",
+    //     },
+    //   }),
+    // }),
   }),
 })
 
-export const {
-  useGetMeQuery,
-  useLoginMutation,
-  useRegisterMutation,
-} = authApi
+// export const {
+//   // useGetMeQuery,
+//   // useLoginMutation,
+//   // useRegisterMutation,
+// } = authApi

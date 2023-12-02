@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const apiUrl = import.meta.env.VITE_SERVER_URL;
+export const apiUrl = import.meta.env.VITE_SERVER_URL + "/api";
 
 export enum ContentType {
     JSON = "application/json",

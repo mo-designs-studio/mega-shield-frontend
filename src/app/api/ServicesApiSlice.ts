@@ -302,7 +302,7 @@ export const {
   useGetAllBookingsQuery,
   useToggleBookingStateToDoneMutation,
   useGetAllBendingBookingsQuery,
-  useGetSubServicesQuery,
+  useGetSubServicesQuery,//
   useAddSubServiceMutation,
   useDeleteSubServiceMutation,
   useGetSubServiceByIDQuery,
