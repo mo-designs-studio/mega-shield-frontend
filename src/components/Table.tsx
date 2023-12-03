@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAppDispatch } from "@/app/hooks";
 import { toggleEditServiceModal, toggleEditSubServiceModal } from "@/app/features/ProductSlice";
-import EditServiceModal from "./EditService";
+import EditServiceModal from "./services/EditService";
 import { EditSubServiceModal } from ".";
 import { useStatesStore } from "@/stateStore";
 
@@ -43,7 +43,7 @@ const ContentTable = ({ headers, mode, items }: ContentTableProps) => {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
-  const {deleteMainService} = useStatesStore();
+  const { deleteMainService } = useStatesStore();
   return (
     <>
       {id !== "" && <EditServiceModal id={id} mode="main" />}
@@ -138,7 +138,7 @@ const ContentTable = ({ headers, mode, items }: ContentTableProps) => {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <img src={item.photo} alt="service-photo" className="w-[250px] m-3" />
+                    <img src={`${serverdUrl}${item.photo}`} alt="service-photo" className="w-[250px] m-3" />
                   </TableCell>
                   <TableCell>{item.__v}</TableCell>
                   <TableCell className="">

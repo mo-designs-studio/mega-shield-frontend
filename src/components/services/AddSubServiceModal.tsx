@@ -1,37 +1,48 @@
-import { IsEditServiceModalOpenSelector, toggleEditServiceModal } from "@/app/features/ProductSlice";
+import { IsServiceModalOpenSelector, toggleServiceModal } from "@/app/features/ProductSlice";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "./ui/input";
-import { useEffect, useState } from "react";
-import { Label } from "./ui/label";
-import { Button } from "./ui/button";
+import { Input } from "../ui/input";
+import { useState } from "react";
+import { Label } from "../ui/label";
+import { Button } from "../ui/button";
 import { useStatesStore } from "@/stateStore";
-import { MainService } from "@/types";
 import imageCompression from "browser-image-compression";
 
-type EditServiceModalProps = {
+type ServiceModalProps = {
+  mode: "add" | "edit";
   id?: string;
   withButton?: boolean;
-  mode: "main" | "sub";
+  setId?: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const EditServiceModal = ({ id = "", withButton = false, mode }: EditServiceModalProps) => {
+const AddSubServiceModal = ({ withButton = false, id = "" }: ServiceModalProps) => {
   const [labelContent, setLabelContent] = useState("اختر صورة");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [pickedImage, setPickedImage] = useState<File | null>(null);
+  const [pickedImage, setPickedImage] = useState<File | null>();
   const [loadingImage, setLoadingImage] = useState(false);
-  const isOpen = useAppSelector(IsEditServiceModalOpenSelector);
-  const dispatch = useAppDispatch();
 
-  const [mainService, setMainService] = useState<MainService | null>(null);
-  const { mainServicesState, updateMainService } = useStatesStore();
+  const isOpen = useAppSelector(IsServiceModalOpenSelector);
+  const dispatch = useAppDispatch();
+  const { addSubService } = useStatesStore();
 
   const resetForm = () => {
+    dispatch(toggleServiceModal(false));
     setDescription("");
     setPickedImage(null);
     setLabelContent("");
     setName("");
+  };
+
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    addSubService({
+      name,
+      description,
+      image: pickedImage,
+      belongsTo: id,
+    });
+    resetForm();
   };
 
   const options = {
@@ -42,7 +53,7 @@ const EditServiceModal = ({ id = "", withButton = false, mode }: EditServiceModa
   const preparePickedImage = async (image: File) => {
     try {
       const compressedFile = await imageCompression(image, options);
-      setPickedImage(new File([compressedFile], compressedFile.name, {type: compressedFile.type} ));
+      setPickedImage(new File([compressedFile], compressedFile.name, { type: compressedFile.type }));
       setLoadingImage(false);
     } catch (errors) {}
   };
@@ -52,32 +63,6 @@ const EditServiceModal = ({ id = "", withButton = false, mode }: EditServiceModa
       preparePickedImage(e.target.files[0]);
     }
   };
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-
-    updateMainService({
-      id,
-      name,
-      description,
-      image: pickedImage,
-    });
-    resetForm();
-    dispatch(toggleEditServiceModal(false));
-  };
-
-  useEffect(() => {
-    if (mainService) {
-      setName(mainService.name);
-      setDescription(mainService.description);
-    }
-  }, [mainService]);
-
-  useEffect(() => {
-    if (id) {
-      const service: MainService | undefined = mainServicesState.find((service) => service._id == id);
-      if (service) setMainService(service);
-    }
-  }, [id]);
 
   return (
     <Dialog open={isOpen}>
@@ -85,14 +70,14 @@ const EditServiceModal = ({ id = "", withButton = false, mode }: EditServiceModa
         <DialogTrigger
           className="font-arabic text-lg px-4 py-3 border border-solid border-primary
         rounded-lg relative overflow-hidden group"
-          onClick={() => dispatch(toggleEditServiceModal(!isOpen))}>
+          onClick={() => dispatch(toggleServiceModal(!isOpen))}>
           <div className="absolute w-full h-full -z-10 bg-primary inset-0 -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
-          تعديل
+          اضف خدمة
         </DialogTrigger>
       )}
       <DialogContent className="font-arabic bg-[#333] border-none text-center text-white text-[1.5rem]">
         <DialogHeader>
-          <DialogTitle className="w-fit mx-auto text-primary mb-4 text-2xl">تعديل الخدمة</DialogTitle>
+          <DialogTitle className="w-fit mx-auto text-primary mb-4 text-2xl">اضافة خدمة جديدة</DialogTitle>
           <DialogDescription>
             <form className="flex flex-col gap-4 text-white" encType="multipart/from-data">
               <Input type="text" placeholder="اسم الخدمة" value={name} onChange={(e) => setName(e.target.value)} />
@@ -109,7 +94,7 @@ const EditServiceModal = ({ id = "", withButton = false, mode }: EditServiceModa
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}></textarea>
               <Button type="submit" disabled={loadingImage} onClick={handleSubmit}>
-                تعديل
+                اضافة
               </Button>
             </form>
           </DialogDescription>
@@ -118,4 +103,4 @@ const EditServiceModal = ({ id = "", withButton = false, mode }: EditServiceModa
     </Dialog>
   );
 };
-export default EditServiceModal;
+export default AddSubServiceModal;

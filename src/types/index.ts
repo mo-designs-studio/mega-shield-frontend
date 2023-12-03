@@ -66,9 +66,9 @@ export interface NewMainService extends MainServiceProps {
   isAdditional?: boolean
 }
 export interface UpdatedMainService extends MainServiceProps {
+  id: string
   image?: File
   isAdditional?: boolean
-  id?: string
 }
 
 export type MainService = {
@@ -105,11 +105,17 @@ export interface Booking extends BookingProps {
   __v: number
 }
 
-export type AddSubServiceProps = {
+export type SubServiceProps = {
   name: string
   description: string
-  photo: string
   belongsTo: string
+}
+export interface NewSubService extends SubServiceProps {
+  image: File
+}
+export interface UpdatedSubService extends SubServiceProps {
+  id: string
+  image?: File
 }
 
 export type AddPackageProps = {

@@ -8,7 +8,7 @@ export interface MainServicesSlice {
     setMainServicesState: (payload: {}) => Function
 }
 
-export const createMainservicesSlice: StateCreator<MainServicesSlice> = (set: Function) => ({
+export const createMainServicesSlice: StateCreator<MainServicesSlice> = (set: Function) => ({
     mainServicesState: [],
     setMainServicesState: (payload) => set(() => ({ mainServicesState: payload }))
 })

@@ -1,6 +1,6 @@
 import {
   AddPackageProps,
-  AddSubServiceProps,
+  // AddSubServiceProps,
   Booking,
   BookingProps,
   MainService,
@@ -126,7 +126,7 @@ const ServicesApiSlice = apiSlice.injectEndpoints({
       { id: string }
     >({
       query: args => ({
-        url: `/services/mainService/${args.id}`,
+        url: `/services/main-service-sub-services/${args.id}`,
         credentials: "include",
         headers: {
           "Content-type": "application/json",
@@ -134,21 +134,21 @@ const ServicesApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["mainServices", "subServices"],
     }),
-    AddSubService: builder.mutation<
-      { services: Service[]; count: number },
-      { service: AddSubServiceProps }
-    >({
-      query: args => ({
-        url: `/services/addService`,
-        credentials: "include",
-        method: "POST",
-        body: JSON.stringify(args.service),
-        headers: {
-          "Content-type": "application/json",
-        },
-      }),
-      invalidatesTags: ["mainServices", "subServices"],
-    }),
+    // AddSubService: builder.mutation<
+    //   { services: Service[]; count: number },
+    //   { service: AddSubServiceProps }
+    // >({
+    //   query: args => ({
+    //     url: `/services/addService`,
+    //     credentials: "include",
+    //     method: "POST",
+    //     body: JSON.stringify(args.service),
+    //     headers: {
+    //       "Content-type": "application/json",
+    //     },
+    //   }),
+    //   invalidatesTags: ["mainServices", "subServices"],
+    // }),
     DeleteSubService: builder.mutation<any, { id: string }>(
       {
         query: args => ({
@@ -303,7 +303,7 @@ export const {
   useToggleBookingStateToDoneMutation,
   useGetAllBendingBookingsQuery,
   useGetSubServicesQuery,//
-  useAddSubServiceMutation,
+  // useAddSubServiceMutation,
   useDeleteSubServiceMutation,
   useGetSubServiceByIDQuery,
   useGetSubServicePackagesQuery,

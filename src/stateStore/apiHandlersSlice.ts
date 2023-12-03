@@ -1,5 +1,6 @@
 import { StateCreator } from 'zustand';
-import { checkApiConnection, getAllMainServices, login, register, getMyProfile, addMainService, updateMainService, deleteMainService } from "../api/endpoints";
+import { checkApiConnection, getAllMainServices, login, register, getMyProfile, addMainService, updateMainService, deleteMainService, addSubService, updateSubService, getAllMainServicesSubServices } from "../api/endpoints";
+
 
 type LoadData = (payload: any | null, get?: Function) => Promise<void>;
 
@@ -12,8 +13,11 @@ export interface ApiHandlersSlice {
     registerHandler: LoadData,
     myProfileHandler: LoadData,
     addMainService: LoadData,
-    updateMainService: LoadData
-    deleteMainService: LoadData
+    updateMainService: LoadData,
+    deleteMainService: LoadData,
+    addSubService: LoadData,
+    updateSubService: LoadData,
+    loadAllMainServicesSubServices: LoadData,
 }
 
 export const createApiHandlersSlice: StateCreator<ApiHandlersSlice> = (set, get) => ({
@@ -28,6 +32,9 @@ export const createApiHandlersSlice: StateCreator<ApiHandlersSlice> = (set, get)
     addMainService: (payload) => handlePostAddMainService(payload, get),
     updateMainService: (payload) => handlePostUpdateMainService(payload, get),
     deleteMainService: (payload) => handleDeleteMainService(payload, get),
+    addSubService: (payload) => handlePostAddSubService(payload, get),
+    updateSubService: (payload) => handlePostUpdateSubService(payload, get),
+    loadAllMainServicesSubServices: (payload) => handleGetAllMainServicesSubServices(payload, get)
 });
 
 const handleGetInitData: LoadData = async (payload, getState) => {
@@ -92,5 +99,34 @@ const handleDeleteMainService: LoadData = async (payload, getState) => {
     if (!error && response.status == 200) {
         const updatedState = mainServicesState.filter((service: any) => service._id != payload.id)
         setMainServicesState(updatedState);
+    }
+}
+
+const handlePostAddSubService: LoadData = async (payload, getState) => {
+    const { subServicesState, setSubServicesState } = getState!();
+    const { response, error } = await addSubService(payload);
+    if (!error && response.status == 201) {
+        const updatedState = [...subServicesState];
+        updatedState.push(response.data.service)
+        setSubServicesState(updatedState)
+    }
+}
+
+const handlePostUpdateSubService: LoadData = async (payload, getState) => {
+    const { subServicesState, setSubServicesState } = getState!();
+    const { response, error } = await updateSubService(payload);
+    if (!error && response.status == 200) {
+        const willUpdatedIndex = subServicesState.findIndex((service: any) => service._id == payload.id)
+        const updatedState = [...subServicesState];
+        updatedState[willUpdatedIndex] = response.data.service
+        setSubServicesState(updatedState);
+    }
+}
+
+const handleGetAllMainServicesSubServices: LoadData = async (payload, getState) => {
+    const { setSubServicesState } = getState!();
+    const { response, error } = await getAllMainServicesSubServices(payload);
+    if (!error && response.status == 200) {
+        setSubServicesState(response.data.services);
     }
 }
