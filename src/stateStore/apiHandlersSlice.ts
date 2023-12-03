@@ -1,5 +1,5 @@
 import { StateCreator } from 'zustand';
-import { checkApiConnection, getAllMainServices, login, register, getMyProfile, addMainService, updateMainService, deleteMainService, addSubService, updateSubService, getAllMainServicesSubServices } from "../api/endpoints";
+import { checkApiConnection, getAllMainServices, login, register, getMyProfile, addMainService, updateMainService, deleteMainService, addSubService, updateSubService, deleteSubService, getAllMainServicesSubServices, getAllServicePackagess } from "../api/endpoints";
 
 
 type LoadData = (payload: any | null, get?: Function) => Promise<void>;
@@ -17,7 +17,9 @@ export interface ApiHandlersSlice {
     deleteMainService: LoadData,
     addSubService: LoadData,
     updateSubService: LoadData,
+    deleteSubService: LoadData,
     loadAllMainServicesSubServices: LoadData,
+    loadAllServicePackages: LoadData,
 }
 
 export const createApiHandlersSlice: StateCreator<ApiHandlersSlice> = (set, get) => ({
@@ -34,7 +36,9 @@ export const createApiHandlersSlice: StateCreator<ApiHandlersSlice> = (set, get)
     deleteMainService: (payload) => handleDeleteMainService(payload, get),
     addSubService: (payload) => handlePostAddSubService(payload, get),
     updateSubService: (payload) => handlePostUpdateSubService(payload, get),
-    loadAllMainServicesSubServices: (payload) => handleGetAllMainServicesSubServices(payload, get)
+    deleteSubService: (payload) => handleDeleteSubService(payload, get),
+    loadAllMainServicesSubServices: (payload) => handleGetAllMainServicesSubServices(payload, get),
+    loadAllServicePackages: (payload) => handleGetAllServicePackages(payload, get)
 });
 
 const handleGetInitData: LoadData = async (payload, getState) => {
@@ -123,10 +127,27 @@ const handlePostUpdateSubService: LoadData = async (payload, getState) => {
     }
 }
 
+const handleDeleteSubService: LoadData = async (payload, getState) => {
+    const { subServicesState, setSubServicesState } = getState!();
+    const { response, error } = await deleteSubService(payload);
+    if (!error && response.status == 200) {
+        const updatedState = subServicesState.filter((service: any) => service._id != payload.id)
+        setSubServicesState(updatedState);
+    }
+}
+
 const handleGetAllMainServicesSubServices: LoadData = async (payload, getState) => {
     const { setSubServicesState } = getState!();
     const { response, error } = await getAllMainServicesSubServices(payload);
     if (!error && response.status == 200) {
         setSubServicesState(response.data.services);
+    }
+}
+
+const handleGetAllServicePackages: LoadData = async (payload, getState) => {
+    const { setPackagesState } = getState!();
+    const { response, error } = await getAllServicePackagess(payload);
+    if (!error && response.status == 200) {
+        setPackagesState(response.data.packages);
     }
 }

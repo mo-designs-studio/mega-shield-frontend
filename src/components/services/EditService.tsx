@@ -28,10 +28,8 @@ const EditServiceModal = ({ id = "", withButton = false, mode }: EditServiceModa
   const { mainServicesState, updateMainService } = useStatesStore();
 
   const resetForm = () => {
-    setDescription("");
     setPickedImage(null);
-    setLabelContent("");
-    setName("");
+    dispatch(toggleEditServiceModal(false));
   };
 
   const options = {
@@ -62,7 +60,6 @@ const EditServiceModal = ({ id = "", withButton = false, mode }: EditServiceModa
       image: pickedImage,
     });
     resetForm();
-    dispatch(toggleEditServiceModal(false));
   };
 
   useEffect(() => {

@@ -25,18 +25,14 @@ const EditSubServiceModal = ({ id = "", withButton = false }: EditServiceModalPr
   const isOpen = useAppSelector(IsEditSubServiceModalOpenSelector);
   const dispatch = useAppDispatch();
 
-  
   const [subService, setSubService] = useState<Service | null>(null);
   const { subServicesState, updateSubService } = useStatesStore();
 
   const resetForm = () => {
-    dispatch(toggleEditSubServiceModal(false));
-    setDescription("");
     setPickedImage(null);
-    setLabelContent("");
-    setName("");
+    dispatch(toggleEditSubServiceModal(false));
   };
-  
+
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
@@ -46,8 +42,8 @@ const EditSubServiceModal = ({ id = "", withButton = false }: EditServiceModalPr
       description,
       belongsTo: mainServiceID,
       id,
-    })
-    resetForm()
+    });
+    resetForm();
   };
 
   const options = {

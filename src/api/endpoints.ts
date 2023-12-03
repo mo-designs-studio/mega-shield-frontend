@@ -161,8 +161,31 @@ export const updateSubService = async (payload: UpdatedSubService): Promise<Resp
   }
 }
 
+export const deleteSubService = async (payload: { id: string }): Promise<Response> => {
+  const url = apiUrl + "/services/delete-sub-service/" + payload.id;
+  const header = { ...createHeaders(ContentType.FORM_DATA) }
+  try {
+    const response = await http.delete(url, header);
+    return { response: response };
+  } catch (error) {
+    const response = createErrorResponse(error);
+    return response;
+  }
+}
 export const getAllMainServicesSubServices = async (payload: { id: string }): Promise<Response> => {
   const url = apiUrl + "/services/main-service-sub-services/" + payload.id;
+  const header = { ...createHeaders(ContentType.JSON) };
+  try {
+    const response = await http.get(url, header);
+    return { response: response };
+  } catch (error) {
+    const response = createErrorResponse(error);
+    return response;
+  }
+}
+
+export const getAllServicePackagess = async (payload: { id: string }): Promise<Response> => {
+  const url = apiUrl + "/packages/service-packages/" + payload.id;
   const header = { ...createHeaders(ContentType.JSON) };
   try {
     const response = await http.get(url, header);

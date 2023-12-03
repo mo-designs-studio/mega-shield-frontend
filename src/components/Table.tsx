@@ -37,13 +37,12 @@ const ContentTable = ({ headers, mode, items }: ContentTableProps) => {
   const [id, setId] = useState("");
   const [subServiceID, setSubServiceID] = useState("");
   const [toggleState] = useToggleBookingStateToDoneMutation();
-  const [deleteSubService] = useDeleteSubServiceMutation();
   const [deletePackage] = useDeletePackageMutation();
   const serverdUrl = import.meta.env.VITE_SERVER_URL;
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
-  const { deleteMainService } = useStatesStore();
+  const { deleteMainService, deleteSubService } = useStatesStore();
   return (
     <>
       {id !== "" && <EditServiceModal id={id} mode="main" />}

@@ -2,11 +2,15 @@ import { create } from "zustand";
 import { ApiHandlersSlice, createApiHandlersSlice } from "./apiHandlersSlice";
 import { MainServicesSlice, createMainServicesSlice } from "./mainServicesSlice";
 import { SubServicesSlice, createSubServicesSlice } from "./subServicesSlice";
+import { PackagesSlice, createPackagsSlice } from "./packagesSlice";
 import { Auth, createAuthSlice } from "./authSlice";
 
-export const useStatesStore = create<ApiHandlersSlice & MainServicesSlice & SubServicesSlice&  Auth>()((...a) => ({
+type SlicesTypes = ApiHandlersSlice & MainServicesSlice & SubServicesSlice & PackagesSlice & Auth;
+
+export const useStatesStore = create<SlicesTypes>()((...a) => ({
     ...createApiHandlersSlice(...a),
     ...createMainServicesSlice(...a),
     ...createSubServicesSlice(...a),
-    ...createAuthSlice(...a)
+    ...createPackagsSlice(...a),
+    ...createAuthSlice(...a),
 }));
