@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { ApiHandlersSlice, createApiHandlersSlice } from "./apiHandlersSlice";
+import { ApiHandlersSlice, createApiHandlersSlice } from "./api-handlers-slice";
 import { MainServicesSlice, createMainServicesSlice } from "./mainServicesSlice";
 import { SubServicesSlice, createSubServicesSlice } from "./subServicesSlice";
 import { PackagesSlice, createPackagsSlice } from "./packagesSlice";

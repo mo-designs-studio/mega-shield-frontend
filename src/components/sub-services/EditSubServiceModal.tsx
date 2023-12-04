@@ -1,4 +1,4 @@
-import { IsEditServiceModalOpenSelector, toggleEditServiceModal } from "@/app/features/ProductSlice";
+import { IsEditSubServiceModalOpenSelector, toggleEditSubServiceModal } from "@/app/features/ProductSlice";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "../ui/input";
@@ -6,30 +6,45 @@ import { useEffect, useState } from "react";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import { useStatesStore } from "@/stateStore";
-import { MainService } from "@/types";
+import { Service } from "@/types";
 import imageCompression from "browser-image-compression";
 
 type EditServiceModalProps = {
   id?: string;
   withButton?: boolean;
-  mode: "main" | "sub";
 };
 
-const EditServiceModal = ({ id = "", withButton = false, mode }: EditServiceModalProps) => {
+const EditSubServiceModal = ({ id = "", withButton = false }: EditServiceModalProps) => {
+  const [mainServiceID, setMainServiceId] = useState("");
   const [labelContent, setLabelContent] = useState("اختر صورة");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [pickedImage, setPickedImage] = useState<File | null>(null);
+  const [pickedImage, setPickedImage] = useState<File | null>();
   const [loadingImage, setLoadingImage] = useState(false);
-  const isOpen = useAppSelector(IsEditServiceModalOpenSelector);
+
+  const isOpen = useAppSelector(IsEditSubServiceModalOpenSelector);
   const dispatch = useAppDispatch();
 
-  const [mainService, setMainService] = useState<MainService | null>(null);
-  const { mainServicesState, updateMainService } = useStatesStore();
+  const [subService, setSubService] = useState<Service | null>(null);
+  const { subServicesState, updateSubService } = useStatesStore();
 
   const resetForm = () => {
     setPickedImage(null);
-    dispatch(toggleEditServiceModal(false));
+    setLabelContent("اختر صورة");
+    dispatch(toggleEditSubServiceModal(false));
+  };
+
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+
+    updateSubService({
+      name,
+      image: pickedImage,
+      description,
+      belongsTo: mainServiceID,
+      id,
+    });
+    resetForm();
   };
 
   const options = {
@@ -41,6 +56,7 @@ const EditServiceModal = ({ id = "", withButton = false, mode }: EditServiceModa
     try {
       const compressedFile = await imageCompression(image, options);
       setPickedImage(new File([compressedFile], compressedFile.name, { type: compressedFile.type }));
+      setLabelContent(compressedFile.name);
       setLoadingImage(false);
     } catch (errors) {}
   };
@@ -50,29 +66,19 @@ const EditServiceModal = ({ id = "", withButton = false, mode }: EditServiceModa
       preparePickedImage(e.target.files[0]);
     }
   };
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-
-    updateMainService({
-      id,
-      name,
-      description,
-      image: pickedImage,
-    });
-    resetForm();
-  };
 
   useEffect(() => {
-    if (mainService) {
-      setName(mainService.name);
-      setDescription(mainService.description);
+    if (subService) {
+      setName(subService.name);
+      setDescription(subService.description);
+      setMainServiceId(subService.belongsTo);
     }
-  }, [mainService]);
+  }, [subService]);
 
   useEffect(() => {
     if (id) {
-      const service: MainService | undefined = mainServicesState.find((service) => service._id == id);
-      if (service) setMainService(service);
+      const service: Service | undefined = subServicesState.find((service) => service._id == id);
+      if (service) setSubService(service);
     }
   }, [id]);
 
@@ -82,7 +88,7 @@ const EditServiceModal = ({ id = "", withButton = false, mode }: EditServiceModa
         <DialogTrigger
           className="font-arabic text-lg px-4 py-3 border border-solid border-primary
         rounded-lg relative overflow-hidden group"
-          onClick={() => dispatch(toggleEditServiceModal(!isOpen))}>
+          onClick={() => dispatch(toggleEditSubServiceModal(!isOpen))}>
           <div className="absolute w-full h-full -z-10 bg-primary inset-0 -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
           تعديل
         </DialogTrigger>
@@ -115,4 +121,4 @@ const EditServiceModal = ({ id = "", withButton = false, mode }: EditServiceModa
     </Dialog>
   );
 };
-export default EditServiceModal;
+export default EditSubServiceModal;

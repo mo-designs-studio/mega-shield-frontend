@@ -1,4 +1,4 @@
-import { useDeletePackageMutation, useDeleteSubServiceMutation, useToggleBookingStateToDoneMutation } from "@/app/api/ServicesApiSlice";
+import { useDeletePackageMutation, useToggleBookingStateToDoneMutation } from "@/app/api/ServicesApiSlice";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Booking, MainService, Package, Service } from "@/types";
 import { For } from "@dev-amr/react-sugartax";
@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAppDispatch } from "@/app/hooks";
 import { toggleEditServiceModal, toggleEditSubServiceModal } from "@/app/features/ProductSlice";
-import EditServiceModal from "./services/EditService";
+import EditServiceModal from "./main-services/EditService";
 import { EditSubServiceModal } from ".";
 import { useStatesStore } from "@/stateStore";
 

@@ -1,5 +1,5 @@
 import { NavLink, ServiceModal } from "@/components";
-import ContentTable from "@/components/Table";
+import ContentTable from "@/components/main-services/Table";
 import { Route, Routes } from "react-router-dom";
 import SubServices from "./SubServices";
 import Bookings from "./Bookings";
@@ -22,7 +22,7 @@ const Services = () => {
             <>
               <ServiceModal mode="add" withButton />
               <div className="overflow-x-scroll max-md:w-[90vw] mx-auto no-scroll">
-                {mainServicesState && <ContentTable mode="main-services" headers={["الاسم", "الوصف", "الصورة", "الاصدار"]} items={mainServicesState} />}
+                {mainServicesState && <ContentTable  headers={["الاسم", "الوصف", "الصورة", "الاصدار"]} items={mainServicesState} />}
               </div>
             </>
           }
