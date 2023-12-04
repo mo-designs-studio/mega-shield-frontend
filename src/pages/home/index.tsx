@@ -1,30 +1,18 @@
-import {
-  About,
-  Adds,
-  Carousel,
-  Locations,
-  Welcome,
-} from "@/components"
-import { Route, Routes } from "react-router-dom"
-import Services from "./nested-pages/Services"
+import { About, Adds, Carousel, Locations, Welcome } from '@/components';
+import { Outlet } from 'react-router-dom';
 
 const Home = () => {
-  return (
-    <Routes>
-      <Route index element={<Page />} />
-      <Route path="/service" element={<Services />} />
-    </Routes>
-  )
-}
+    return <Outlet />;
+};
 
-const Page = () => (
-  <div>
-    <Carousel />
-    <Welcome />
-    <About />
-    <Adds />
-    <Locations />
-  </div>
-)
+export const Page = () => (
+    <div>
+        <Carousel />
+        <Welcome />
+        <About />
+        <Adds />
+        <Locations />
+    </div>
+);
 
-export default Home
+export default Home;

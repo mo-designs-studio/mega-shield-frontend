@@ -2,9 +2,7 @@ import { toggleAuth } from "@/app/features/AuthSlice";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { DashboardLinkProps } from "@/types";
 import { useEffect, useState } from "react";
-import { Link, Route, Routes, useLocation } from "react-router-dom";
-import Products from "./nested-pages/Products";
-import Services from "./nested-pages/Services";
+import { Link, Outlet,useLocation } from "react-router-dom";
 import logo from "/logo.png";
 import { BeatLoader } from "react-spinners";
 import { IsSidebarOpenSelector, toggleSidebar } from "@/app/features/ProductSlice";
@@ -52,12 +50,7 @@ const Dashboard = () => {
       </div>
       <div className="flex-1 p-5 h-screen overflow-y-scroll">
         <Menu className="text-primary sm:hidden block cursor-pointer" onClick={() => dispatch(toggleSidebar(true))} size={25} />
-        <div className="">
-          <Routes>
-            <Route path="products/*" element={<Products />} />
-            <Route path="services/*" element={<Services />} />
-          </Routes>
-        </div>
+        <Outlet />
       </div>
     </div>
   );
