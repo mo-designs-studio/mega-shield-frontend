@@ -10,5 +10,5 @@ export interface PackagesSlice {
 
 export const createPackagsSlice: StateCreator<PackagesSlice> = (set: Function) => ({
     packagesState: [],
-    setPackagesState: (payload) => set(() => ({subServicesState: payload }))
+    setPackagesState: (payload) => set(() => ({packagesState: payload }))
 })

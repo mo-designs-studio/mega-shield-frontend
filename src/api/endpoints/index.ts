@@ -9,7 +9,7 @@ import {
 } from './main-services';
 import { addSubService, updateSubService, deleteSubService, getAllMainServicesSubServices } from './sub-services';
 import { login, register, getMyProfile } from './auth';
-import { getAllServicePackagess } from './packages';
+import { getAllServicePackagess, addPackage, updatePackage, deletePackage } from './packages';
 
 export type Response = {
     response: AxiosResponse;
@@ -42,4 +42,7 @@ export {
     deleteSubService,
     getAllMainServicesSubServices,
     getAllServicePackagess,
+    addPackage,
+    updatePackage,
+    deletePackage,
 };

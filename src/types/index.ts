@@ -118,7 +118,7 @@ export interface UpdatedSubService extends SubServiceProps {
   image?: File
 }
 
-export type AddPackageProps = {
+export type PackageProps = {
   name: string
   belongTo: string
   description: string[]
@@ -127,7 +127,11 @@ export type AddPackageProps = {
   mediumPrice: number
 }
 
-export interface Package extends AddPackageProps {
+export interface NewPackageProps extends PackageProps {
+  
+}
+
+export interface Package extends PackageProps {
   _id: string
   __v: number
 }

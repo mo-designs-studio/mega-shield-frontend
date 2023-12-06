@@ -1,7 +1,6 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { For } from '@dev-amr/react-sugartax';
 import { Button } from '../ui/button';
-import { useNavigate } from 'react-router-dom';
 import { useStatesStore } from '@/stateStore';
 
 type ContentTableProps = {
@@ -9,10 +8,7 @@ type ContentTableProps = {
 };
 
 const ContentTable = ({ headers }: ContentTableProps) => {
-    const serverUrl = import.meta.env.VITE_SERVER_URL;
-
-    const navigate = useNavigate();
-    const { subServicesState, deleteSubService, setModalState } = useStatesStore();
+    const { packagesState, deletePackage, setModalState } = useStatesStore();
     return (
         <>
             <Table className="font-arabic my-5 min-w-[767px]">
@@ -28,28 +24,35 @@ const ContentTable = ({ headers }: ContentTableProps) => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {subServicesState && subServicesState.length > 0
-                        ? subServicesState.map((item, i) => (
+                    {packagesState && packagesState.length > 0
+                        ? packagesState.map((item, i) => (
                               <TableRow key={i}>
                                   <TableCell>{item.name}</TableCell>
                                   <TableCell>
-                                      <div className="w-[150px] h-[100px] overflow-y-scroll">
-                                          <p>{item.description}</p>
+                                      <div className="flex items-start justify-center gap-3 flex-col">
+                                          {item.description.map((feature, i) => (
+                                              <span
+                                                  key={i}
+                                                  className={
+                                                      i !== item.description.length - 1
+                                                          ? 'border-b border-solid border-primary pb-3'
+                                                          : ''
+                                                  }
+                                              >
+                                                  {feature}
+                                              </span>
+                                          ))}
                                       </div>
                                   </TableCell>
-                                  <TableCell>
-                                      <img
-                                          src={`${serverUrl}${item.photo}`}
-                                          alt="service-photo"
-                                          className="w-[250px] m-3"
-                                      />
-                                  </TableCell>
+                                  <TableCell>{item.smallPrice}$</TableCell>
+                                  <TableCell>{item.mediumPrice}$</TableCell>
+                                  <TableCell>{item.bigPrice}$</TableCell>
                                   <TableCell>{item.__v}</TableCell>
                                   <TableCell className="">
                                       <div className="flex items-center gap-4 flex-wrap text-primary justify-center">
                                           <Button
                                               onClick={() => {
-                                                  deleteSubService({ id: item._id });
+                                                  deletePackage({ id: item._id });
                                               }}
                                           >
                                               حذف
@@ -57,29 +60,22 @@ const ContentTable = ({ headers }: ContentTableProps) => {
                                           <Button
                                               onClick={() => {
                                                   setModalState({
-                                                      name: 'sub-service',
+                                                      name: 'package',
                                                       mode: 'edit',
                                                       status: true,
                                                       extras: {
-                                                          serviceId: item._id,
+                                                          packageId: item._id,
                                                       },
                                                   });
                                               }}
                                           >
                                               تعديل
                                           </Button>
-                                          <Button
-                                              onClick={() => {
-                                                  navigate(`/dash/services/packages/${item._id}`);
-                                              }}
-                                          >
-                                              الباقات
-                                          </Button>
                                       </div>
                                   </TableCell>
                               </TableRow>
                           ))
-                        : 'لا توجد خدمات مسجلة'}
+                        : 'لا توجد باقات مسجلة'}
                 </TableBody>
             </Table>
         </>

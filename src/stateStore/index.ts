@@ -4,8 +4,9 @@ import { MainServicesSlice, createMainServicesSlice } from "./mainServicesSlice"
 import { SubServicesSlice, createSubServicesSlice } from "./subServicesSlice";
 import { PackagesSlice, createPackagsSlice } from "./packagesSlice";
 import { Auth, createAuthSlice } from "./authSlice";
+import { ModalSlice, createModalSlice} from "./modalSlice";
 
-type SlicesTypes = ApiHandlersSlice & MainServicesSlice & SubServicesSlice & PackagesSlice & Auth;
+type SlicesTypes = ApiHandlersSlice & MainServicesSlice & SubServicesSlice & PackagesSlice & Auth & ModalSlice;
 
 export const useStatesStore = create<SlicesTypes>()((...a) => ({
     ...createApiHandlersSlice(...a),
@@ -13,4 +14,5 @@ export const useStatesStore = create<SlicesTypes>()((...a) => ({
     ...createSubServicesSlice(...a),
     ...createPackagsSlice(...a),
     ...createAuthSlice(...a),
+    ...createModalSlice(...a),
 }));

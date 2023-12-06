@@ -1,4 +1,3 @@
-import ServicesBody from '@/components/main-services/ServicesBody';
 import RootLayout from '@/layouts/RootLayout';
 import Contact from '@/pages/contact';
 import Dashboard from '@/pages/dashboard';
@@ -47,24 +46,18 @@ const router = createBrowserRouter([
                     {
                         path: '/dash/services',
                         element: <DashServices />,
-                        children: [
-                            {
-                                path: '/dash/services/',
-                                element: <ServicesBody />,
-                            },
-                            {
-                                path: '/dash/services/subservices/:id',
-                                element: <SubServices />,
-                            },
-                            {
-                                path: '/dash/services/packages/:id',
-                                element: <Package />,
-                            },
-                            {
-                                path: '/dash/services/bookings',
-                                element: <Bookings />,
-                            },
-                        ],
+                    },
+                    {
+                        path: '/dash/services/subservices/:id',
+                        element: <SubServices />,
+                    },
+                    {
+                        path: '/dash/services/packages/:id',
+                        element: <Package />,
+                    },
+                    {
+                        path: '/dash/services/bookings',
+                        element: <Bookings />,
                     },
                 ],
             },

@@ -1,10 +1,6 @@
 import { StateCreator } from 'zustand';
 import { checkApiConnection } from '../../api/endpoints';
-import {
-    handlePostLogin,
-    handlePostRegister,
-    handleGetMyProfile,
-} from './auth';
+import { handlePostLogin, handlePostRegister, handleGetMyProfile } from './auth';
 import {
     handleGetAllMainServices,
     handlePostAddMainService,
@@ -17,7 +13,12 @@ import {
     handleDeleteSubService,
     handleGetAllMainServicesSubServices,
 } from './sub-services';
-import { handleGetAllServicePackages } from './packages';
+import {
+    handleGetAllServicePackages,
+    handleAddServicePackages,
+    handleUpdateServicePackages,
+    handleDeletePackage,
+} from './packages';
 
 export type LoadData = (payload: any | null, get?: Function) => Promise<void>;
 
@@ -37,12 +38,12 @@ export interface ApiHandlersSlice {
     deleteSubService: LoadData;
     loadAllMainServicesSubServices: LoadData;
     loadAllServicePackages: LoadData;
+    addServicePackages: LoadData;
+    updateServicePackages: LoadData;
+    deletePackage: LoadData;
 }
 
-export const createApiHandlersSlice: StateCreator<ApiHandlersSlice> = (
-    set,
-    get
-) => ({
+export const createApiHandlersSlice: StateCreator<ApiHandlersSlice> = (set, get) => ({
     isLoading: false,
     setIsLoading: (payload) => set(() => ({ isLoading: payload })),
     loadInitData: (payload) => handleGetInitData(payload, get),
@@ -57,10 +58,11 @@ export const createApiHandlersSlice: StateCreator<ApiHandlersSlice> = (
     addSubService: (payload) => handlePostAddSubService(payload, get),
     updateSubService: (payload) => handlePostUpdateSubService(payload, get),
     deleteSubService: (payload) => handleDeleteSubService(payload, get),
-    loadAllMainServicesSubServices: (payload) =>
-        handleGetAllMainServicesSubServices(payload, get),
-    loadAllServicePackages: (payload) =>
-        handleGetAllServicePackages(payload, get),
+    loadAllMainServicesSubServices: (payload) => handleGetAllMainServicesSubServices(payload, get),
+    loadAllServicePackages: (payload) => handleGetAllServicePackages(payload, get),
+    addServicePackages: (payload) => handleAddServicePackages(payload, get),
+    updateServicePackages: (payload) => handleUpdateServicePackages(payload, get),
+    deletePackage: (payload) => handleDeletePackage(payload, get),
 });
 
 const handleGetInitData: LoadData = async (payload, getState) => {
