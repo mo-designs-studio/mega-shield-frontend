@@ -5,7 +5,7 @@ import { Package } from '@/types';
 
 export interface PackagesSlice {
     packagesState: Package[],
-    setPackagesState: (payload: {}) => Function
+    setPackagesState: (payload: Package[]) => Function
 }
 
 export const createPackagsSlice: StateCreator<PackagesSlice> = (set: Function) => ({

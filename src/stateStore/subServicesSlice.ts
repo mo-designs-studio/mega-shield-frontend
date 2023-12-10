@@ -5,7 +5,7 @@ import { Service } from '@/types';
 
 export interface SubServicesSlice {
     subServicesState: Service[],
-    setSubServicesState: (payload: {}) => Function
+    setSubServicesState: (payload: Service[]) => Function
 }
 
 export const createSubServicesSlice: StateCreator<SubServicesSlice> = (set: Function) => ({

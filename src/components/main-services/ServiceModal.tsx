@@ -22,13 +22,25 @@ const ServiceModal = () => {
     const [loadingImage, setLoadingImage] = useState(false);
     const [isAdditional, setIsAdditional] = useState(false);
 
-    const [mainService, setMainService] = useState<MainService | null>(null);
     const { mainServicesState, addMainService, updateMainService, modalState, setModalState, resetModalState } =
         useStatesStore();
 
     const resetForm = () => {
+        setName('');
+        setDescription('');
         setLabelContent('اختر صورة');
         setPickedImage(null);
+        setIsAdditional(false);
+    };
+
+    const handleAddClickEvent = () => {
+        resetForm();
+        setModalState({
+            name: 'main-service',
+            mode: 'add',
+            status: true,
+            extras: {},
+        });
     };
 
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -40,7 +52,6 @@ const ServiceModal = () => {
                 image: pickedImage,
                 isAdditional,
             });
-            resetForm();
         } else if (modalState.mode === 'edit') {
             updateMainService({
                 id: modalState.extras?.mainServiceId,
@@ -48,9 +59,9 @@ const ServiceModal = () => {
                 description,
                 image: pickedImage,
             });
-            resetForm();
-            resetModalState();
         }
+        resetForm();
+        resetModalState();
     };
 
     const options = {
@@ -77,34 +88,23 @@ const ServiceModal = () => {
             const service: MainService | undefined = mainServicesState.find(
                 (service) => service._id == modalState.extras?.mainServiceId
             );
-            if (service) setMainService(service);
+            if (service) {
+                setName(service.name);
+                setDescription(service.description);
+                setIsAdditional(service.isAdditional);
+            }
         }
     }, [modalState]);
-
-    useEffect(() => {
-        if (mainService) {
-            const { name, description, isAdditional } = mainService;
-            setName(name);
-            setDescription(description);
-            setIsAdditional(isAdditional);
-        }
-    }, [mainService]);
 
     return (
         <Dialog open={modalState.status && modalState.name == 'main-service'}>
             <DialogTrigger
                 className="font-arabic text-lg px-4 py-3 border border-solid border-primary
         rounded-lg relative overflow-hidden group"
-                onClick={() =>
-                    setModalState({
-                        name: 'main-service',
-                        mode: 'add',
-                        status: true,
-                    })
-                }
+                onClick={handleAddClickEvent}
             >
                 <div className="absolute w-full h-full -z-10 bg-primary inset-0 -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
-                أضف باقة
+                أضف خدمة
             </DialogTrigger>
 
             <DialogContent className="font-arabic bg-[#333] border-none text-center text-white text-[1.5rem]">
@@ -156,9 +156,18 @@ const ServiceModal = () => {
                                     خدمة اضافية
                                 </Label>
                             </div>
-                            <Button type="submit" onClick={handleSubmit} disabled={loadingImage}>
-                                {modalState.mode === 'add' ? 'اضافة' : 'تعديل'}
-                            </Button>
+                            <div className="grid grid-flow-col gap-x-5 ">
+                                <Button className="w-1/1" type="submit" onClick={handleSubmit} disabled={loadingImage}>
+                                    {modalState.mode == 'add' ? 'إضافة' : 'تعديل'}
+                                </Button>
+                                <Button
+                                    className="w-1/1 bg-gray-700 hover:bg-gray-300"
+                                    type="reset"
+                                    onClick={resetModalState}
+                                >
+                                    إلغاء
+                                </Button>
+                            </div>
                         </form>
                     </DialogDescription>
                 </DialogHeader>

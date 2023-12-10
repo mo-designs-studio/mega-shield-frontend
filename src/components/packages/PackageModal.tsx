@@ -24,6 +24,26 @@ const PackageModal = ({ serviceId }: packageProps) => {
     const [bigPrice, setBigPrice] = useState(0);
     const [features, setFeatures] = useState(new Array(3).fill(''));
 
+    const resetForm = () => {
+        setName('');
+        setSmallPrice(0);
+        setMediumPrice(0);
+        setBigPrice(0);
+        setFeatures(new Array(3).fill(''));
+    };
+
+    const handleAddClickEvent = () => {
+        resetForm();
+        setModalState({
+            name: 'package',
+            mode: 'add',
+            status: true,
+            extras: {
+                serviceId: serviceId,
+            },
+        });
+    };
+
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         if (modalState.mode == 'add') {
@@ -48,6 +68,7 @@ const PackageModal = ({ serviceId }: packageProps) => {
                 },
             });
         }
+        resetForm();
         resetModalState();
     };
     useEffect(() => {
@@ -69,16 +90,7 @@ const PackageModal = ({ serviceId }: packageProps) => {
         <Dialog open={modalState.status && modalState.name == 'package'}>
             <DialogTrigger
                 className="font-arabic text-lg px-4 py-3 border border-solid border-primary rounded-lg relative overflow-hidden group"
-                onClick={() =>
-                    setModalState({
-                        name: 'package',
-                        mode: 'add',
-                        status: true,
-                        extras: {
-                            serviceId: serviceId,
-                        },
-                    })
-                }
+                onClick={handleAddClickEvent}
             >
                 <div className="absolute w-full h-full -z-10 bg-primary inset-0 -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
                 أضف باقة
@@ -153,9 +165,18 @@ const PackageModal = ({ serviceId }: packageProps) => {
                                     });
                                 }}
                             />
-                            <Button type="submit" onClick={handleSubmit}>
-                            {modalState.mode == 'add' ? 'إضافة' : 'تعديل'}
-                            </Button>
+                            <div className="grid grid-flow-col gap-x-5 ">
+                                <Button className="w-1/1" type="submit" onClick={handleSubmit}>
+                                    {modalState.mode == 'add' ? 'إضافة' : 'تعديل'}
+                                </Button>
+                                <Button
+                                    className="w-1/1 bg-gray-700 hover:bg-gray-300"
+                                    type="reset"
+                                    onClick={resetModalState}
+                                >
+                                    إلغاء
+                                </Button>
+                            </div>
                         </form>
                     </DialogDescription>
                 </DialogHeader>

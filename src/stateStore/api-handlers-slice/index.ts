@@ -19,6 +19,7 @@ import {
     handleUpdateServicePackages,
     handleDeletePackage,
 } from './packages';
+import { handleGetAllProducts, handlePostAddProduct, handlePatchUpdateProduct, handleDeleteProduct } from './product';
 
 export type LoadData = (payload: any | null, get?: Function) => Promise<void>;
 
@@ -41,6 +42,10 @@ export interface ApiHandlersSlice {
     addServicePackages: LoadData;
     updateServicePackages: LoadData;
     deletePackage: LoadData;
+    loadAllProducts: LoadData;
+    addProduct: LoadData;
+    updateProduct: LoadData;
+    deleteProduct: LoadData;
 }
 
 export const createApiHandlersSlice: StateCreator<ApiHandlersSlice> = (set, get) => ({
@@ -63,6 +68,10 @@ export const createApiHandlersSlice: StateCreator<ApiHandlersSlice> = (set, get)
     addServicePackages: (payload) => handleAddServicePackages(payload, get),
     updateServicePackages: (payload) => handleUpdateServicePackages(payload, get),
     deletePackage: (payload) => handleDeletePackage(payload, get),
+    loadAllProducts: (payload) => handleGetAllProducts(payload, get),
+    addProduct: (payload) => handlePostAddProduct(payload, get),
+    updateProduct: (payload) => handlePatchUpdateProduct(payload, get),
+    deleteProduct: (payload) => handleDeleteProduct(payload, get),
 });
 
 const handleGetInitData: LoadData = async (payload, getState) => {

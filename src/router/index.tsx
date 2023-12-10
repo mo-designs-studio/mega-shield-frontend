@@ -59,11 +59,11 @@ const router = createBrowserRouter([
                         path: '/dash/services/bookings',
                         element: <Bookings />,
                     },
+                    {
+                        path: '/dash/products/*',
+                        element: <Products />,
+                    },
                 ],
-            },
-            {
-                path: '/dash/products/*',
-                element: <Products />,
             },
             {
                 path: '/contact',

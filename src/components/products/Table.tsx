@@ -1,8 +1,8 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { For } from '@dev-amr/react-sugartax';
 import { Button } from '../ui/button';
-import { useNavigate } from 'react-router-dom';
 import { useStatesStore } from '@/stateStore';
+import { useEffect } from 'react';
 
 type ContentTableProps = {
     headers: string[];
@@ -10,9 +10,12 @@ type ContentTableProps = {
 
 const ContentTable = ({ headers }: ContentTableProps) => {
     const serverUrl = import.meta.env.VITE_SERVER_URL;
+    const { productsState, loadAllProducts, deleteProduct, setModalState } = useStatesStore();
 
-    const navigate = useNavigate();
-    const { mainServicesState, deleteMainService, setModalState } = useStatesStore();
+    useEffect(() => {
+        loadAllProducts(null);
+    }, []);
+
     return (
         <>
             <Table className="font-arabic my-5 min-w-[767px]">
@@ -28,8 +31,8 @@ const ContentTable = ({ headers }: ContentTableProps) => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {mainServicesState && mainServicesState.length > 0
-                        ? mainServicesState.map((item, i) => (
+                    {productsState && productsState.length > 0
+                        ? productsState.map((item, i) => (
                               <TableRow key={i}>
                                   <TableCell>{item.name}</TableCell>
                                   <TableCell>
@@ -37,6 +40,7 @@ const ContentTable = ({ headers }: ContentTableProps) => {
                                           <p>{item.description}</p>
                                       </div>
                                   </TableCell>
+                                  <TableCell>{item.price}</TableCell>
                                   <TableCell>
                                       <img
                                           src={`${serverUrl}${item.photo}`}
@@ -45,13 +49,12 @@ const ContentTable = ({ headers }: ContentTableProps) => {
                                       />
                                   </TableCell>
                                   <TableCell>{item.__v}</TableCell>
-                                  <TableCell>{item.isAdditional ? 'خدمة اضافية' : 'خدمة اساسية'}</TableCell>
                                   <TableCell>
                                       <div className="flex items-center justify-center gap-4">
                                           <Button
                                               className="font-arabic me-3"
                                               onClick={() => {
-                                                  deleteMainService({
+                                                  deleteProduct({
                                                       id: item._id,
                                                   });
                                               }}
@@ -62,30 +65,22 @@ const ContentTable = ({ headers }: ContentTableProps) => {
                                               className="font-arabic me-3"
                                               onClick={() => {
                                                   setModalState({
-                                                      name: 'main-service',
+                                                      name: 'product',
                                                       mode: 'edit',
                                                       status: true,
                                                       extras: {
-                                                          mainServiceId: item._id,
+                                                          productId: item._id,
                                                       },
                                                   });
                                               }}
                                           >
                                               تعديل
                                           </Button>
-                                          <Button
-                                              className="font-arabic"
-                                              onClick={() => {
-                                                  navigate(`/dash/services/subservices/${item._id}`);
-                                              }}
-                                          >
-                                              الخدمات الفرعية
-                                          </Button>
                                       </div>
                                   </TableCell>
                               </TableRow>
                           ))
-                        : 'لا توجد خدمات أساسية مسجلة.'}
+                        : 'لا توجد منتجات مسجلة.'}
                 </TableBody>
             </Table>
         </>
