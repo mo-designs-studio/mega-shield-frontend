@@ -151,6 +151,7 @@ const Slide = ({
   subServiceID,
 }: SlideProps) => {
   const ref = useRef<HTMLDivElement>(null)
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
 
   const { data: subServices } = useGetSubServicesQuery({
     id: service._id,
@@ -166,7 +167,7 @@ const Slide = ({
       className={`transition-all duration-500 rounded-s-lg p-5 flex flex-col items-center justify-center h-full
       grow-0 w-full shrink-0 bg-center bg-no-repeat bg-cover slider-child`}
       style={{
-        backgroundImage: `url("${service.photo}")`,
+        backgroundImage: `url("${serverUrl}${service.photo}")`,
         backgroundRepeat: "no-repeat",
       }}
       ref={ref}

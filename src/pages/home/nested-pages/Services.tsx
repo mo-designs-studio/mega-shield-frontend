@@ -1,13 +1,24 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import bigCar from '/big.png';
 import mediumCar from '/medium.png';
 import smallCar from '/small.png';
 import { AdditionalServices, Packages, PersonalInfo } from '@/components';
+import { useStatesStore } from '@/stateStore';
+import { MainService } from '@/types';
 
 const Services = () => {
     const [active, setActive] = useState<0 | 1 | 2>(0);
     const [className, setClassName] = useState('opacity-1');
+    const [additionalServices, setAdditionalServices] = useState<MainService[]>([]);
     const [packages, setPackages] = useState<{ title: string; price: number }[]>([]);
+    const { mainServicesState } = useStatesStore();
+
+    useEffect(() => {
+        if (mainServicesState) {
+            const filtered = mainServicesState.filter((item) => item.isAdditional);
+            setAdditionalServices(filtered);
+        }
+    }, [mainServicesState]);
 
     return (
         <section className="text-center py-20 bg-neutral-900">
@@ -22,7 +33,8 @@ const Services = () => {
                             setActive={setActive}
                             id={0}
                             active={active === 0}
-                            setClassName={setClassName}>
+                            setClassName={setClassName}
+                        >
                             صغير
                         </SelectCard>
                         <SelectCard
@@ -30,7 +42,8 @@ const Services = () => {
                             setActive={setActive}
                             id={1}
                             active={active === 1}
-                            setClassName={setClassName}>
+                            setClassName={setClassName}
+                        >
                             وسط
                         </SelectCard>
                         <SelectCard
@@ -38,7 +51,8 @@ const Services = () => {
                             setActive={setActive}
                             id={2}
                             active={active === 2}
-                            setClassName={setClassName}>
+                            setClassName={setClassName}
+                        >
                             كبير
                         </SelectCard>
                     </div>
@@ -52,7 +66,22 @@ const Services = () => {
                 </div>
             </div>
             <Packages packages={packages} setPackages={setPackages} carSize={active} />
-            <AdditionalServices carSize={active} packages={packages} setPackages={setPackages} />
+            <section className="min-h-screen">
+                <h1 className="text-primary font-arabic font-bold text-2xl my-5">الخدمات الاضافية</h1>
+                {additionalServices.length > 0 ? (
+                    additionalServices.map((service, index) => (
+                        <AdditionalServices
+                            key={index}
+                            carSize={active}
+                            packages={packages}
+                            setPackages={setPackages}
+                            service={service}
+                        />
+                    ))
+                ) : (
+                    <p>لا توجد خدمات إضافية متاحة</p>
+                )}
+            </section>
             <PersonalInfo setPackages={setPackages} packages={packages} carSize={active} />
         </section>
     );
@@ -86,7 +115,8 @@ const SelectCard = ({ children, active = false, setActive, setClassName, id, img
                     setClassName('opacity-1 translate-y-0');
                     setActive(id);
                 }, 600);
-            }}>
+            }}
+        >
             <h1 className="w-fit mx-auto text-2xl text-primary">{children}</h1>
             <img src={img} alt="car-size" className="block my-5 w-[200px]" />
         </button>

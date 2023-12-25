@@ -7,7 +7,7 @@ const Services = () => {
             <ServiceModal />
             <div className="overflow-x-scroll max-md:w-[90vw] mx-auto no-scroll">
                 <ContentTable headers={['الاسم', 'الوصف', 'الصورة', 'الاصدار']} />
-            </div>
+            </div> 
         </div>
     );
 };

@@ -58,15 +58,15 @@ const ServicesApiSlice = apiSlice.injectEndpoints({
         //     }),
         //     invalidatesTags: ['mainServices'],
         // }),
-        GetServiceByID: builder.query<MainService, { id: string }>({
-            query: (arg) => ({
-                url: `/mainservices/${arg.id}`,
-                credentials: 'include',
-                headers: {
-                    'Content-type': 'application/json',
-                },
-            }),
-        }),
+        // GetServiceByID: builder.query<MainService, { id: string }>({
+        //     query: (arg) => ({
+        //         url: `/mainservices/${arg.id}`,
+        //         credentials: 'include',
+        //         headers: {
+        //             'Content-type': 'application/json',
+        //         },
+        //     }),
+        // }),
         GetAllBookings: builder.query<{ bookings: Booking[]; count: number }, any>({
             query: () => ({
                 url: `/bookings/allAppointments`,
@@ -148,18 +148,18 @@ const ServicesApiSlice = apiSlice.injectEndpoints({
         //     }),
         //     invalidatesTags: ['mainServices', 'subServices'],
         // }),
-        AddPackage: builder.mutation<any, { id: string; props: PackageProps }>({
-            query: (args) => ({
-                url: `/packages/${args.id}/addPackage`,
-                credentials: 'include',
-                method: 'POST',
-                body: JSON.stringify(args.props),
-                headers: {
-                    'Content-type': 'application/json',
-                },
-            }),
-            invalidatesTags: ['mainServices', 'subServices', 'package'],
-        }),
+        // AddPackage: builder.mutation<any, { id: string; props: PackageProps }>({
+        //     query: (args) => ({
+        //         url: `/packages/${args.id}/addPackage`,
+        //         credentials: 'include',
+        //         method: 'POST',
+        //         body: JSON.stringify(args.props),
+        //         headers: {
+        //             'Content-type': 'application/json',
+        //         },
+        //     }),
+        //     invalidatesTags: ['mainServices', 'subServices', 'package'],
+        // }),
         // GetSubServiceByID: builder.query<Service, { id: string }>({
         //     query: (args) => ({
         //         url: `/services/${args.id}`,
@@ -172,7 +172,7 @@ const ServicesApiSlice = apiSlice.injectEndpoints({
         // }),
         GetSubServicePackages: builder.query<{ packages: Package[]; count: number }, { id: string }>({
             query: (args) => ({
-                url: `/services/servicePackages/${args.id}`,
+                url: `/packages/service-packages/${args.id}`,
                 credentials: 'include',
                 headers: {
                     'Content-type': 'application/json',
@@ -180,16 +180,16 @@ const ServicesApiSlice = apiSlice.injectEndpoints({
             }),
             providesTags: ['mainServices', 'subServices', 'package'],
         }),
-        GetPackageByID: builder.query<Package, { id: string }>({
-            query: (args) => ({
-                url: `/packages/${args.id}`,
-                credentials: 'include',
-                headers: {
-                    'Content-type': 'application/json',
-                },
-            }),
-            providesTags: ['mainServices', 'subServices', 'package'],
-        }),
+        // GetPackageByID: builder.query<Package, { id: string }>({
+        //     query: (args) => ({
+        //         url: `/packages/${args.id}`,
+        //         credentials: 'include',
+        //         headers: {
+        //             'Content-type': 'application/json',
+        //         },
+        //     }),
+        //     providesTags: ['mainServices', 'subServices', 'package'],
+        // }),
         DeletePackage: builder.mutation<any, { id: string }>({
             query: (args) => ({
                 url: `/packages/deletePackage/${args.id}`,
@@ -201,18 +201,18 @@ const ServicesApiSlice = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ['mainServices', 'subServices', 'package'],
         }),
-        UpdatePackage: builder.mutation<any, { id: string; props: Partial<PackageProps> }>({
-            query: (args) => ({
-                url: `/packages/updatePackage/${args.id}`,
-                credentials: 'include',
-                method: 'PATCH',
-                body: JSON.stringify(args.props),
-                headers: {
-                    'Content-type': 'application/json',
-                },
-            }),
-            invalidatesTags: ['mainServices', 'subServices', 'package'],
-        }),
+        // UpdatePackage: builder.mutation<any, { id: string; props: Partial<PackageProps> }>({
+        //     query: (args) => ({
+        //         url: `/packages/updatePackage/${args.id}`,
+        //         credentials: 'include',
+        //         method: 'PATCH',
+        //         body: JSON.stringify(args.props),
+        //         headers: {
+        //             'Content-type': 'application/json',
+        //         },
+        //     }),
+        //     invalidatesTags: ['mainServices', 'subServices', 'package'],
+        // }),
         AddBooking: builder.mutation<any, BookingProps>({
             query: (args) => ({
                 url: `/bookings/makeAppointment`,
@@ -231,7 +231,7 @@ const ServicesApiSlice = apiSlice.injectEndpoints({
 export const {
     // useAddMainServiceMutation,
     // useUpdateMainServiceMutation,
-    useGetServiceByIDQuery,
+    // useGetServiceByIDQuery,
     // useGetAllMainServicesQuery,
     // useDeleteMainServiceMutation,
     useGetAllBookingsQuery,
@@ -243,9 +243,9 @@ export const {
     // useGetSubServiceByIDQuery,
     useGetSubServicePackagesQuery,
     // useUpdateSubServiceMutation,
-    useAddPackageMutation,
+    // useAddPackageMutation,
     useDeletePackageMutation,
-    useGetPackageByIDQuery,
-    useUpdatePackageMutation,
+    // useGetPackageByIDQuery,
+    // useUpdatePackageMutation,
     useAddBookingMutation,
 } = ServicesApiSlice;
