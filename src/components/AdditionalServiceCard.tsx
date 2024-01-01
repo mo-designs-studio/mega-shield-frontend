@@ -1,7 +1,7 @@
 import { Package, Service } from '@/types';
 import AdditionalServicePackageCard from './AdditionalServicePackageCard';
 import { useEffect, useState } from 'react';
-import { getAllServicePackagess } from '@/api/endpoints';
+import { getAllServicePackages } from '@/api/endpoints';
 
 const AdditionalServiceCard = ({
     subService,
@@ -21,7 +21,7 @@ const AdditionalServiceCard = ({
     }, [subService]);
 
     const getServicePackages = async (id: string) => {
-        const { response, error } = await getAllServicePackagess({ id });
+        const { response, error } = await getAllServicePackages({ id });
         if (!error) setServicePackages(response.data.packages);
     };
 

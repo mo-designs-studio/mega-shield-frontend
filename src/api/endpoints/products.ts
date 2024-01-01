@@ -1,6 +1,6 @@
 import axios from 'axios';
 import http, { apiUrl, createHeaders, createErrorResponse, ContentType } from '..';
-import { Response } from './index';
+import { Response } from '@/types';
 import { ProductProps } from '@/types';
 
 export const getAllProducts = async (): Promise<Response> => {

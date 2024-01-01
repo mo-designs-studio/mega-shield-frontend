@@ -1,7 +1,7 @@
 import axios from "axios";
 import { LoginInfo, RegisterInfo } from "@/types";
 import http, { apiUrl, createHeaders, createErrorResponse, ContentType } from "..";
-import { Response } from "./index";
+import { Response } from '@/types';
 
 export const login = async (payload: LoginInfo): Promise<Response> => {
     const url = apiUrl + "/auth/login";

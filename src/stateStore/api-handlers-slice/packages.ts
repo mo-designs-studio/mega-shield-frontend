@@ -1,9 +1,9 @@
 import { LoadData } from './';
-import { getAllServicePackagess, addPackage, updatePackage, deletePackage } from '@/api/endpoints';
+import { getAllServicePackages, addPackage, updatePackage, deletePackage } from '@/api/endpoints';
 
 export const handleGetAllServicePackages: LoadData = async (payload, getState) => {
     const { setPackagesState } = getState!();
-    const { response, error } = await getAllServicePackagess(payload);
+    const { response, error } = await getAllServicePackages(payload);
     if (!error && response.status == 200) {
         setPackagesState(response.data.packages);
     }

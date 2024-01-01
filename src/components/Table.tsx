@@ -56,35 +56,7 @@ const ContentTable = ({ headers, mode, items }: ContentTableProps) => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {mode === 'booking' && items.length > 0
-                        ? items.map((item, i) => (
-                              <TableRow key={i}>
-                                  <TableCell>{item.customerFname + ' ' + item.customerLname}</TableCell>
-                                  <TableCell>{item.customerPhone}</TableCell>
-                                  <TableCell>
-                                      {new Date(item.date).toLocaleDateString() +
-                                          ' ' +
-                                          new Date(item.date).toLocaleTimeString()}
-                                  </TableCell>
-                                  <TableCell>{item.carSize}</TableCell>
-                                  <TableCell className="flex items-center gap-4 flex-wrap text-primary">
-                                      {item.service.map((service, i) => (
-                                          <span key={i}>{service}</span>
-                                      ))}
-                                  </TableCell>
-                                  <TableCell>
-                                      <Button
-                                          onClick={() => {
-                                              toggleState({ id: item._id });
-                                          }}
-                                      >
-                                          تمييز كمنجز
-                                      </Button>
-                                  </TableCell>
-                                  <TableCell>{item.status === 'done' ? 'منجز' : 'غير منجز'}</TableCell>
-                              </TableRow>
-                          ))
-                        : mode === 'services' && items.length > 0
+                    { mode === 'services' && items.length > 0
                         ? items.map((item, i) => (
                               <TableRow key={i}>
                                   <TableCell>{item.name}</TableCell>

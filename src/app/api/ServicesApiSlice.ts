@@ -24,20 +24,20 @@ const ServicesApiSlice = apiSlice.injectEndpoints({
         //     }),
         //     invalidatesTags: ['mainServices'],
         // }),
-        ToggleBookingStateToDone: builder.mutation<void, { id: string }>({
-            query: (arg) => ({
-                url: `/bookings/changeStatus/${arg.id}`,
-                method: 'PATCH',
-                body: JSON.stringify({
-                    status: 'done',
-                }),
-                credentials: 'include',
-                headers: {
-                    'Content-type': 'application/json',
-                },
-            }),
-            invalidatesTags: ['mainServices'],
-        }),
+        // ToggleBookingStateToDone: builder.mutation<void, { id: string }>({
+        //     query: (arg) => ({
+        //         url: `/bookings/set-status-done/${arg.id}`,
+        //         method: 'PATCH',
+        //         body: JSON.stringify({
+        //             status: 'done',
+        //         }),
+        //         credentials: 'include',
+        //         headers: {
+        //             'Content-type': 'application/json',
+        //         },
+        //     }),
+        //     invalidatesTags: ['mainServices'],
+        // }),
         // UpdateMainService: builder.mutation<void, { arg: Partial<MainServiceProps>; id: string }>({
         //     query: (arg) => ({
         //         url: `/mainservices/updateMainService/${arg.id}`,
@@ -67,26 +67,26 @@ const ServicesApiSlice = apiSlice.injectEndpoints({
         //         },
         //     }),
         // }),
-        GetAllBookings: builder.query<{ bookings: Booking[]; count: number }, any>({
-            query: () => ({
-                url: `/bookings/allAppointments`,
-                credentials: 'include',
-                headers: {
-                    'Content-type': 'application/json',
-                },
-            }),
-            providesTags: ['mainServices'],
-        }),
-        GetAllBendingBookings: builder.query<{ appointments: Booking[]; count: number }, any>({
-            query: () => ({
-                url: `/bookings/pendingAppointments`,
-                credentials: 'include',
-                headers: {
-                    'Content-type': 'application/json',
-                },
-            }),
-            providesTags: ['mainServices'],
-        }),
+        // GetAllBookings: builder.query<{ bookings: Booking[]; count: number }, any>({
+        //     query: () => ({
+        //         url: `/bookings/appointments`,
+        //         credentials: 'include',
+        //         headers: {
+        //             'Content-type': 'application/json',
+        //         },
+        //     }),
+        //     providesTags: ['mainServices'],
+        // }),
+        // GetAllBendingBookings: builder.query<{ appointments: Booking[]; count: number }, any>({
+        //     query: () => ({
+        //         url: `/bookings/pending-appointments`,
+        //         credentials: 'include',
+        //         headers: {
+        //             'Content-type': 'application/json',
+        //         },
+        //     }),
+        //     providesTags: ['mainServices'],
+        // }),
         // GetAllMainServices: builder.query<
         //   { mainServices: MainService[]; count: number },
         //   any
@@ -213,18 +213,18 @@ const ServicesApiSlice = apiSlice.injectEndpoints({
         //     }),
         //     invalidatesTags: ['mainServices', 'subServices', 'package'],
         // }),
-        AddBooking: builder.mutation<any, BookingProps>({
-            query: (args) => ({
-                url: `/bookings/makeAppointment`,
-                credentials: 'include',
-                method: 'POST',
-                body: JSON.stringify(args),
-                headers: {
-                    'Content-type': 'application/json',
-                },
-            }),
-            invalidatesTags: ['mainServices', 'subServices', 'package'],
-        }),
+        // AddBooking: builder.mutation<any, BookingProps>({
+        //     query: (args) => ({
+        //         url: `/bookings/makeAppointment`,
+        //         credentials: 'include',
+        //         method: 'POST',
+        //         body: JSON.stringify(args),
+        //         headers: {
+        //             'Content-type': 'application/json',
+        //         },
+        //     }),
+        //     invalidatesTags: ['mainServices', 'subServices', 'package'],
+        // }),
     }),
 });
 
@@ -234,9 +234,9 @@ export const {
     // useGetServiceByIDQuery,
     // useGetAllMainServicesQuery,
     // useDeleteMainServiceMutation,
-    useGetAllBookingsQuery,
-    useToggleBookingStateToDoneMutation,
-    useGetAllBendingBookingsQuery,
+    // useGetAllBookingsQuery,
+    // useToggleBookingStateToDoneMutation,
+    // useGetAllBendingBookingsQuery,
     useGetSubServicesQuery,
     // useAddSubServiceMutation,
     // useDeleteSubServiceMutation,
@@ -244,8 +244,8 @@ export const {
     useGetSubServicePackagesQuery,
     // useUpdateSubServiceMutation,
     // useAddPackageMutation,
-    useDeletePackageMutation,
+    // useDeletePackageMutation,
     // useGetPackageByIDQuery,
     // useUpdatePackageMutation,
-    useAddBookingMutation,
+    // useAddBookingMutation,
 } = ServicesApiSlice;

@@ -1,5 +1,5 @@
 import http, { apiUrl, createHeaders, createErrorResponse, ContentType } from "..";
-import { Response } from "./index";
+import { Response } from '@/types';
 import { NewMainService, UpdatedMainService } from "@/types";
 
 export const getAllMainServices = async (): Promise<Response> => {

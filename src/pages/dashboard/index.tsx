@@ -10,7 +10,7 @@ import { Menu, X } from 'lucide-react';
 import { useStatesStore } from '@/stateStore';
 
 const Dashboard = () => {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const dispatch = useAppDispatch();
 
     const isSidebarOpen = useAppSelector(IsSidebarOpenSelector);
@@ -20,10 +20,12 @@ const Dashboard = () => {
         myProfileHandler(null);
         setIsLoading(false);
     }, []);
+
     useEffect(() => {
         if (!user) dispatch(toggleAuth(true));
         else dispatch(toggleAuth(false));
     }, [user]);
+
     return (
         <div className="flex min-h-screen relative items-stretch">
             {isLoading && (

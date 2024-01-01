@@ -1,4 +1,10 @@
+import { AxiosResponse } from 'axios';
 import { ReactNode } from 'react';
+
+export type Response = {
+    response: AxiosResponse;
+    error?: { code: string; message: string };
+};
 
 export type User = {
     name: string;

@@ -2,8 +2,7 @@ import { CarFront } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { useEffect, useState } from 'react';
-import { useAddBookingMutation } from '@/app/api/ServicesApiSlice';
-import { toast } from 'react-toastify';
+import { useStatesStore } from '@/stateStore';
 
 type PersonalInfoProps = {
     carSize: 0 | 1 | 2;
@@ -19,6 +18,7 @@ const PersonalInfo = ({ carSize, packages }: PersonalInfoProps) => {
     const [phone, setPhone] = useState('');
     const [city, setCity] = useState('');
     const [date, setDate] = useState('');
+    const { addBooking } = useStatesStore();
 
     useEffect(() => {
         setPackagesName([]);
@@ -27,12 +27,10 @@ const PersonalInfo = ({ carSize, packages }: PersonalInfoProps) => {
         });
     }, [packages]);
     useEffect(() => console.log('packagesName', packagesName), [packagesName]);
-    const [book] = useAddBookingMutation();
 
     const handleAddBooking = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-
-        book({
+        addBooking({
             carSize: carSize === 0 ? 'small' : carSize === 1 ? 'medium' : carSize === 2 ? 'large' : '',
             city,
             customerFname: firstName,
@@ -40,15 +38,7 @@ const PersonalInfo = ({ carSize, packages }: PersonalInfoProps) => {
             customerPhone: phone,
             date,
             service: packagesName,
-        })
-            .unwrap()
-            .then(() => {
-                toast('تم اتمام حجزك بنجاح', { type: 'success' });
-            })
-            .catch((err) => {
-                console.log(err);
-                toast(err.data.msg, { type: 'error' });
-            });
+        });
     };
     return (
         <div

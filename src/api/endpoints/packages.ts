@@ -1,8 +1,8 @@
 import { PackageProps } from '@/types';
 import http, { apiUrl, createHeaders, createErrorResponse, ContentType } from '..';
-import { Response } from './index';
+import { Response } from '@/types';
 
-export const getAllServicePackagess = async (payload: { id: string }): Promise<Response> => {
+export const getAllServicePackages = async (payload: { id: string }): Promise<Response> => {
     const url = apiUrl + '/packages/service-packages/' + payload.id;
     const header = { ...createHeaders(ContentType.JSON) };
     try {

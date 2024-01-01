@@ -35,6 +35,7 @@ export const handleGetAllMainServicesSubServices: LoadData = async (payload, get
     const { setSubServicesState } = getState!();
     const { response, error } = await getAllMainServicesSubServices(payload);
     if (!error && response.status == 200) {
+        console.log("$#^$%^DGRGG", response.data.services)
         setSubServicesState(response.data.services);
     }
 }

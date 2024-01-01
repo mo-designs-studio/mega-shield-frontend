@@ -1,70 +1,66 @@
-import {
-  useGetAllBendingBookingsQuery,
-  useGetAllBookingsQuery,
-} from "@/app/api/ServicesApiSlice"
-import ContentTable from "@/components/Table"
-import { useState } from "react"
+import ContentTable from '@/components/bookings/Table';
+import { useEffect, useState } from 'react';
+import { useStatesStore } from '@/stateStore';
+import { Booking } from '@/types';
 
 const Bookings = () => {
-  const [pending, setPending] = useState(false)
+    const [showPending, setShowPending] = useState(false);
+    const [pendingItems, setPendingItems] = useState<Booking[] | null>();
 
-  const { data: items, isLoading } =
-    useGetAllBookingsQuery("")
+    const { isLoading, loadAllAppointments, bookingsState } = useStatesStore();
+    useEffect(() => {
+        if (bookingsState) {
+            const pendingList = bookingsState.filter((booking) => booking.status == 'pending');
+            setPendingItems(pendingList);
+        }
+    }, [showPending, bookingsState]);
 
-  const { data: pendingItems } =
-    useGetAllBendingBookingsQuery("")
+    useEffect(() => {
+        loadAllAppointments(null);
+    }, []);
 
-  if (isLoading) return "loading..."
+    return (
+        <>
+            {isLoading ? (
+                <h1>Loading...</h1>
+            ) : (
+                <div>
+                    <form className="my-5">
+                        <div className="flex items-center gap-3 text-sm font-arabic">
+                            <input
+                                type="radio"
+                                name="filter"
+                                id="filter-1"
+                                onChange={(e) => {
+                                    if (e.target.checked) setShowPending(false);
+                                }}
+                            />
+                            <label htmlFor="filter-1">عرض الكل</label>
+                        </div>
 
-  return (
-    <div>
-      <form className="my-5">
-        <div className="flex items-center gap-3 text-sm font-arabic">
-          <input
-            type="radio"
-            name="filter"
-            id="filter-1"
-            onChange={e => {
-              if (e.target.checked) setPending(false)
-            }}
-          />
-          <label htmlFor="filter-1">عرض الكل</label>
-        </div>
-
-        <div className="flex items-center gap-3 text-sm font-arabic">
-          <input
-            type="radio"
-            name="filter"
-            id="filter-2"
-            onChange={e => {
-              if (e.target.checked) setPending(true)
-            }}
-          />
-          <label htmlFor="filter-2">
-            عرض الحجوزات المتظرة
-          </label>
-        </div>
-      </form>
-      <div className=" overflow-x-scroll max-md:w-[90vw] mx-auto no-scroll">
-        {items && pendingItems && (
-          <ContentTable
-            items={
-              pending
-                ? pendingItems?.appointments
-                : items?.bookings
-            }
-            mode="booking"
-            headers={[
-              "اسم العميل",
-              "رقم الهاتف",
-              "التاريخ",
-              "حجم السيارة",
-              "الباقات و الاضافات",
-            ]}
-          />
-        )}
-      </div>
-    </div>
-  )
-}
-export default Bookings
+                        <div className="flex items-center gap-3 text-sm font-arabic">
+                            <input
+                                type="radio"
+                                name="filter"
+                                id="filter-2"
+                                onChange={(e) => {
+                                    if (e.target.checked) setShowPending(true);
+                                }}
+                            />
+                            <label htmlFor="filter-2">عرض الحجوزات المتظرة</label>
+                        </div>
+                    </form>
+                    <div className=" overflow-x-scroll max-md:w-[90vw] mx-auto no-scroll">
+                        {bookingsState && !isLoading && (
+                            <ContentTable
+                                bookings={pendingItems && showPending ? pendingItems : bookingsState}
+                                headers={['اسم العميل', 'رقم الهاتف', 'التاريخ', 'حجم السيارة', 'الباقات و الاضافات']}
+                            />
+                        )}
+                    </div>
+                </div>
+            )}
+        </>
+    );
+};
+export default Bookings;

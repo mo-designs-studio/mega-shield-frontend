@@ -1,6 +1,6 @@
 import { NewSubService, UpdatedSubService } from "@/types";
 import http, { apiUrl, createHeaders, createErrorResponse, ContentType } from "..";
-import { Response } from "./index";
+import { Response } from '@/types';
 
 export const addSubService = async (payload: NewSubService): Promise<Response> => {
     const url = apiUrl + "/services/add-sub-service";
