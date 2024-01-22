@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import AdditionalServiceCard from './AdditionalServiceCard';
-import { MainService, Service } from '@/types';
+import { CarSizes, MainService, Service } from '@/types';
 import { getAllMainServicesSubServices } from '@/api/endpoints';
 
 type PackagesProps = {
     packages: { title: string; price: number }[];
     setPackages: React.Dispatch<React.SetStateAction<{ title: string; price: number }[]>>;
-    carSize: 0 | 1 | 2;
+    carSize: CarSizes;
     service: MainService;
 };
 

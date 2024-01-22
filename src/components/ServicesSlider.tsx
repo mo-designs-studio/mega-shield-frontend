@@ -1,31 +1,25 @@
 import useCarousel from '@/hooks/useCarousel';
 import { useEffect, useRef, useState } from 'react';
-import { useStatesStore } from '@/stateStore';
-import { MainService } from '@/types';
+import { CarSizes, MainService } from '@/types';
 import ServicePackageCard from './ServicePackageCard';
 import '../../public/css/style.css';
 
 type ServicesProps = {
-    setSubServiceID: React.Dispatch<React.SetStateAction<string | null>>;
+    size: string;
     data: any[];
 };
 
-const ServicesSlider = ({ setSubServiceID, data }: ServicesProps) => {
-    const [filteredMainServices, setFilteredMainServices] = useState<MainService[]>([]);
+const ServicesSlider = ({ data, size }: ServicesProps) => {
 
     const { next, page, prev } = useCarousel({
         time: 3000,
-        pages: filteredMainServices.length,
+        pages: data.length,
         autoPlay: false,
     });
-    const { mainServicesState } = useStatesStore();
-    useEffect(() => {
-        if (mainServicesState.length > 0) {
-            const filtered = mainServicesState.filter((item) => !item.isAdditional);
 
-            setFilteredMainServices(filtered);
-        }
-    }, [mainServicesState]);
+    useEffect(() => {
+        console.log('data services slider', data);
+    }, [data]);
 
     return (
         <div className="relative">
@@ -38,14 +32,7 @@ const ServicesSlider = ({ setSubServiceID, data }: ServicesProps) => {
                 >
                     {data &&
                         data.length > 0 &&
-                        data.map((service) => (
-                            <Slide
-                                setSubServiceID={setSubServiceID}
-                                subServiceID={service._id}
-                                key={service._id}
-                                service={service}
-                            />
-                        ))}
+                        data.map((service) => <Slide key={service._id} service={service} size={size} />)}
                 </div>
                 <button onClick={prev} className="absolute z-[150] top-1/2 -translate-y-1/2 left-5 rotate-90">
                     <div className="flex flex-col gap-2 items-center justify-center">
@@ -103,91 +90,6 @@ const ServicesSlider = ({ setSubServiceID, data }: ServicesProps) => {
                         </svg>
                     </div>
                 </button>
-                <div className="service-packages-container">
-                    <div className="packages-container">
-                        <div className="grid grid-columns px-2 py-8 max-w-[1100px] mx-auto place-items-center">
-                            <ServicePackageCard
-                                packages={[]}
-                                setPackages={() => {}}
-                                title="package name"
-                                features={['description one']}
-                                price={500}
-                            />
-                        </div>
-                        <div className="grid grid-columns px-2 py-8 max-w-[1100px] mx-auto place-items-center">
-                            <ServicePackageCard
-                                packages={[]}
-                                setPackages={() => {}}
-                                title="package name"
-                                features={['description one']}
-                                price={500}
-                            />
-                        </div>
-                        <div className="grid grid-columns px-2 py-8 max-w-[1100px] mx-auto place-items-center">
-                            <ServicePackageCard
-                                packages={[]}
-                                setPackages={() => {}}
-                                title="package name"
-                                features={['description one']}
-                                price={500}
-                            />
-                        </div>
-                        <div className="grid grid-columns px-2 py-8 max-w-[1100px] mx-auto place-items-center">
-                            <ServicePackageCard
-                                packages={[]}
-                                setPackages={() => {}}
-                                title="package name"
-                                features={['description one']}
-                                price={500}
-                            />
-                        </div>
-                        <div className="grid grid-columns px-2 py-8 max-w-[1100px] mx-auto place-items-center">
-                            <ServicePackageCard
-                                packages={[]}
-                                setPackages={() => {}}
-                                title="package name"
-                                features={['description one']}
-                                price={500}
-                            />
-                        </div>
-                        <div className="grid grid-columns px-2 py-8 max-w-[1100px] mx-auto place-items-center">
-                            <ServicePackageCard
-                                packages={[]}
-                                setPackages={() => {}}
-                                title="package name"
-                                features={['description one']}
-                                price={500}
-                            />
-                        </div>
-                        <div className="grid grid-columns px-2 py-8 max-w-[1100px] mx-auto place-items-center">
-                            <ServicePackageCard
-                                packages={[]}
-                                setPackages={() => {}}
-                                title="package name"
-                                features={['description one']}
-                                price={500}
-                            />
-                        </div>
-                        <div className="grid grid-columns px-2 py-8 max-w-[1100px] mx-auto place-items-center">
-                            <ServicePackageCard
-                                packages={[]}
-                                setPackages={() => {}}
-                                title="package name"
-                                features={['description one']}
-                                price={500}
-                            />
-                        </div>
-                        <div className="grid grid-columns px-2 py-8 max-w-[1100px] mx-auto place-items-center">
-                            <ServicePackageCard
-                                packages={[]}
-                                setPackages={() => {}}
-                                title="package name"
-                                features={['description one']}
-                                price={500}
-                            />
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     );
@@ -196,16 +98,10 @@ export default ServicesSlider;
 
 type SlideProps = {
     service: MainService;
-    setSubServiceID: React.Dispatch<React.SetStateAction<string | null>>;
-    subServiceID: string | null;
+    size: string;
 };
 
-const Slide = ({
-    service,
-
-    setSubServiceID,
-    subServiceID,
-}: SlideProps) => {
+const Slide = ({ service, size }: SlideProps) => {
     const ref = useRef<HTMLDivElement>(null);
     const serverUrl = import.meta.env.VITE_SERVER_URL;
 
@@ -222,6 +118,27 @@ const Slide = ({
         >
             <h1 className="w-fit mx-auto text-5xl font-arabic font-bold">{service.name}</h1>
             <div className="my-5 flex flex-wrap flex-col gap-2 p-5"></div>
+            <div className="service-packages-container">
+                <div className="packages-container">
+                    {service.packages.map((pkg) => (
+                        <div className="grid grid-columns px-2 py-8 max-w-[1100px] mx-auto place-items-center">
+                            <ServicePackageCard
+                                packages={[]}
+                                setPackages={() => {}}
+                                title={pkg.name}
+                                features={pkg.description}
+                                price={
+                                    size == CarSizes.small
+                                        ? pkg.smallPrice
+                                        : size == CarSizes.medium
+                                        ? pkg.mediumPrice
+                                        : pkg.bigPrice
+                                }
+                            />
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
     );
 };

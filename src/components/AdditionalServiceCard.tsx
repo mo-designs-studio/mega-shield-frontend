@@ -1,4 +1,4 @@
-import { Package, Service } from '@/types';
+import { CarSizes, Package, Service } from '@/types';
 import AdditionalServicePackageCard from './AdditionalServicePackageCard';
 import { useEffect, useState } from 'react';
 import { getAllServicePackages } from '@/api/endpoints';
@@ -12,7 +12,7 @@ const AdditionalServiceCard = ({
     subService: Service;
     packages: { title: string; price: number }[];
     setPackages: React.Dispatch<React.SetStateAction<{ title: string; price: number }[]>>;
-    carSize: 0 | 1 | 2;
+    carSize: CarSizes;
 }) => {
     const [servicePackages, setServicePackages] = useState<Package[]>([]);
 
@@ -32,7 +32,7 @@ const AdditionalServiceCard = ({
                     servicePackages.length > 0 &&
                     servicePackages.map((pckg, index) => (
                         <AdditionalServicePackageCard
-                            price={carSize === 0 ? pckg.smallPrice : carSize === 1 ? pckg.mediumPrice : pckg.bigPrice}
+                            price={carSize === CarSizes.small ? pckg.smallPrice : carSize === CarSizes.medium ? pckg.mediumPrice : pckg.bigPrice}
                             servicePackage={pckg}
                             key={index}
                             packages={packages}

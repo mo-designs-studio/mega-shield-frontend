@@ -7,7 +7,7 @@ import { useStatesStore } from '@/stateStore';
 import { CarSizes, MainService } from '@/types';
 
 const Services = () => {
-    const [active, setActive] = useState<0 | 1 | 2>(0);
+    const [active, setActive] = useState<CarSizes>(CarSizes.small);
     const [className, setClassName] = useState('opacity-1');
     const [additionalServices, setAdditionalServices] = useState<MainService[]>([]);
     const [packages, setPackages] = useState<{ title: string; price: number }[]>([]);
@@ -31,8 +31,8 @@ const Services = () => {
                         <SelectCard
                             img={smallCar}
                             setActive={setActive}
-                            id={0}
-                            active={active === 0}
+                            id={CarSizes.small}
+                            active={active === CarSizes.small}
                             setClassName={setClassName}
                         >
                             {CarSizes.small}
@@ -40,8 +40,8 @@ const Services = () => {
                         <SelectCard
                             img={mediumCar}
                             setActive={setActive}
-                            id={1}
-                            active={active === 1}
+                            id={CarSizes.medium}
+                            active={active === CarSizes.medium}
                             setClassName={setClassName}
                         >
                             {CarSizes.medium}
@@ -49,8 +49,8 @@ const Services = () => {
                         <SelectCard
                             img={bigCar}
                             setActive={setActive}
-                            id={2}
-                            active={active === 2}
+                            id={CarSizes.large}
+                            active={active === CarSizes.large}
                             setClassName={setClassName}
                         >
                             {CarSizes.large}
@@ -59,13 +59,13 @@ const Services = () => {
                 </div>
                 <div className="w-[50vw] aspect-auto mx-auto">
                     <img
-                        src={active === 0 ? smallCar : active === 1 ? mediumCar : bigCar}
+                        src={active === CarSizes.small ? CarSizes.small : active === CarSizes.medium ? CarSizes.medium : CarSizes.large}
                         alt={`car-size-${active}`}
                         className={`${className} transition-all duration-300`}
                     />
                 </div>
             </div>
-            <Packages packages={packages} setPackages={setPackages} carSize={active} />
+            <Packages setPackages={setPackages} carSize={active} />
             <section className="min-h-screen">
                 <h1 className="text-primary font-arabic font-bold text-2xl my-5">الخدمات الاضافية</h1>
                 {additionalServices.length > 0 ? (
@@ -95,8 +95,8 @@ const Heading = ({ content }: { content: string }) => {
 type SelectCardProps = {
     children: ReactNode;
     active?: boolean;
-    id: 0 | 1 | 2;
-    setActive: React.Dispatch<React.SetStateAction<0 | 1 | 2>>;
+    id: CarSizes;
+    setActive: React.Dispatch<React.SetStateAction<CarSizes>>;
     setClassName: React.Dispatch<React.SetStateAction<string>>;
     img: string;
 };
