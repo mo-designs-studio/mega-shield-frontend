@@ -2,7 +2,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { For } from '@dev-amr/react-sugartax';
 import { Button } from '../ui/button';
 import { useStatesStore } from '@/stateStore';
-import { Booking } from '@/types';
+import { Booking, CarSizes } from '@/types';
+import { getEnumValue } from '@/app/helpers';
 
 type ContentTableProps = {
     headers: string[];
@@ -12,6 +13,7 @@ type ContentTableProps = {
 const ContentTable = ({ headers, bookings }: ContentTableProps) => {
 
     const { updateBookingStatus } = useStatesStore();
+    console.log(CarSizes)
     return (
         <>
             <Table className="font-arabic my-5 min-w-[767px]">
@@ -37,7 +39,7 @@ const ContentTable = ({ headers, bookings }: ContentTableProps) => {
                                         ' ' +
                                         new Date(item.date).toLocaleTimeString()}
                                 </TableCell>
-                                <TableCell>{item.carSize}</TableCell>
+                                <TableCell>{getEnumValue(item.carSize)}</TableCell>
                                 <TableCell className="flex items-center gap-4 flex-wrap text-primary">
                                     {item.service.map((service, i) => (
                                         <span key={i}>{service}</span>

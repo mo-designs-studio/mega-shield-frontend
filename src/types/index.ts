@@ -140,3 +140,9 @@ export interface Package extends PackageProps {
     _id: string;
     __v: number;
 }
+
+export enum CarSizes  {
+    small = "صغير",
+    medium = "وسط",
+    large = "كبير",
+}

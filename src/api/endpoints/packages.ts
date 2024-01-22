@@ -13,6 +13,17 @@ export const getAllServicePackages = async (payload: { id: string }): Promise<Re
         return response;
     }
 };
+export const getAllMainServicesPackages = async (payload: { type: string }): Promise<Response> => {
+    const url = apiUrl + '/packages/all-services-packages/' + payload.type;
+    const header = { ...createHeaders(ContentType.JSON) };
+    try {
+        const response = await http.get(url, header);
+        return { response: response };
+    } catch (error) {
+        const response = createErrorResponse(error);
+        return response;
+    }
+};
 
 export const addPackage = async (payload: PackageProps): Promise<Response> => {
     const url = apiUrl + '/packages/add-package';

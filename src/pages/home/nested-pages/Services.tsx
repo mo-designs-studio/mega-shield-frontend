@@ -4,7 +4,7 @@ import mediumCar from '/medium.png';
 import smallCar from '/small.png';
 import { AdditionalServices, Packages, PersonalInfo } from '@/components';
 import { useStatesStore } from '@/stateStore';
-import { MainService } from '@/types';
+import { CarSizes, MainService } from '@/types';
 
 const Services = () => {
     const [active, setActive] = useState<0 | 1 | 2>(0);
@@ -35,7 +35,7 @@ const Services = () => {
                             active={active === 0}
                             setClassName={setClassName}
                         >
-                            صغير
+                            {CarSizes.small}
                         </SelectCard>
                         <SelectCard
                             img={mediumCar}
@@ -44,7 +44,7 @@ const Services = () => {
                             active={active === 1}
                             setClassName={setClassName}
                         >
-                            وسط
+                            {CarSizes.medium}
                         </SelectCard>
                         <SelectCard
                             img={bigCar}
@@ -53,7 +53,7 @@ const Services = () => {
                             active={active === 2}
                             setClassName={setClassName}
                         >
-                            كبير
+                            {CarSizes.large}
                         </SelectCard>
                     </div>
                 </div>

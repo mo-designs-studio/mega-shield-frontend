@@ -1,17 +1,16 @@
 import useCarousel from '@/hooks/useCarousel';
-import { For } from '@dev-amr/react-sugartax';
 import { useEffect, useRef, useState } from 'react';
 import { useStatesStore } from '@/stateStore';
 import { MainService } from '@/types';
-
-import { useGetSubServicesQuery } from '@/app/api/ServicesApiSlice';
+import ServicePackageCard from './ServicePackageCard';
+import '../../public/css/style.css';
 
 type ServicesProps = {
     setSubServiceID: React.Dispatch<React.SetStateAction<string | null>>;
-    subServiceID: string | null;
+    data: any[];
 };
 
-const ServicesSlider = ({ setSubServiceID, subServiceID }: ServicesProps) => {
+const ServicesSlider = ({ setSubServiceID, data }: ServicesProps) => {
     const [filteredMainServices, setFilteredMainServices] = useState<MainService[]>([]);
 
     const { next, page, prev } = useCarousel({
@@ -37,18 +36,16 @@ const ServicesSlider = ({ setSubServiceID, subServiceID }: ServicesProps) => {
                         translate: `${100 * (page - 1)}%`,
                     }}
                 >
-                    {mainServicesState && (
-                        <For each={filteredMainServices}>
-                            {(item: MainService, i) => (
-                                <Slide
-                                    setSubServiceID={setSubServiceID}
-                                    subServiceID={subServiceID}
-                                    key={i}
-                                    service={item}
-                                />
-                            )}
-                        </For>
-                    )}
+                    {data &&
+                        data.length > 0 &&
+                        data.map((service) => (
+                            <Slide
+                                setSubServiceID={setSubServiceID}
+                                subServiceID={service._id}
+                                key={service._id}
+                                service={service}
+                            />
+                        ))}
                 </div>
                 <button onClick={prev} className="absolute z-[150] top-1/2 -translate-y-1/2 left-5 rotate-90">
                     <div className="flex flex-col gap-2 items-center justify-center">
@@ -106,6 +103,91 @@ const ServicesSlider = ({ setSubServiceID, subServiceID }: ServicesProps) => {
                         </svg>
                     </div>
                 </button>
+                <div className="service-packages-container">
+                    <div className="packages-container">
+                        <div className="grid grid-columns px-2 py-8 max-w-[1100px] mx-auto place-items-center">
+                            <ServicePackageCard
+                                packages={[]}
+                                setPackages={() => {}}
+                                title="package name"
+                                features={['description one']}
+                                price={500}
+                            />
+                        </div>
+                        <div className="grid grid-columns px-2 py-8 max-w-[1100px] mx-auto place-items-center">
+                            <ServicePackageCard
+                                packages={[]}
+                                setPackages={() => {}}
+                                title="package name"
+                                features={['description one']}
+                                price={500}
+                            />
+                        </div>
+                        <div className="grid grid-columns px-2 py-8 max-w-[1100px] mx-auto place-items-center">
+                            <ServicePackageCard
+                                packages={[]}
+                                setPackages={() => {}}
+                                title="package name"
+                                features={['description one']}
+                                price={500}
+                            />
+                        </div>
+                        <div className="grid grid-columns px-2 py-8 max-w-[1100px] mx-auto place-items-center">
+                            <ServicePackageCard
+                                packages={[]}
+                                setPackages={() => {}}
+                                title="package name"
+                                features={['description one']}
+                                price={500}
+                            />
+                        </div>
+                        <div className="grid grid-columns px-2 py-8 max-w-[1100px] mx-auto place-items-center">
+                            <ServicePackageCard
+                                packages={[]}
+                                setPackages={() => {}}
+                                title="package name"
+                                features={['description one']}
+                                price={500}
+                            />
+                        </div>
+                        <div className="grid grid-columns px-2 py-8 max-w-[1100px] mx-auto place-items-center">
+                            <ServicePackageCard
+                                packages={[]}
+                                setPackages={() => {}}
+                                title="package name"
+                                features={['description one']}
+                                price={500}
+                            />
+                        </div>
+                        <div className="grid grid-columns px-2 py-8 max-w-[1100px] mx-auto place-items-center">
+                            <ServicePackageCard
+                                packages={[]}
+                                setPackages={() => {}}
+                                title="package name"
+                                features={['description one']}
+                                price={500}
+                            />
+                        </div>
+                        <div className="grid grid-columns px-2 py-8 max-w-[1100px] mx-auto place-items-center">
+                            <ServicePackageCard
+                                packages={[]}
+                                setPackages={() => {}}
+                                title="package name"
+                                features={['description one']}
+                                price={500}
+                            />
+                        </div>
+                        <div className="grid grid-columns px-2 py-8 max-w-[1100px] mx-auto place-items-center">
+                            <ServicePackageCard
+                                packages={[]}
+                                setPackages={() => {}}
+                                title="package name"
+                                features={['description one']}
+                                price={500}
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );
@@ -126,21 +208,8 @@ const Slide = ({
 }: SlideProps) => {
     const ref = useRef<HTMLDivElement>(null);
     const serverUrl = import.meta.env.VITE_SERVER_URL;
-    const { loadAllMainServicesSubServices, subServicesState } = useStatesStore();
-    const { data: subServices } = useGetSubServicesQuery({
-        id: service._id,
-    });
 
-    useEffect(() => {
-        console.log('Service Slider : Slide', subServicesState, service._id);
-        if (subServices && subServices.services.length) {
-            setSubServiceID(subServices?.services[0]._id);
-        }
-    }, [subServicesState]);
-
-    useEffect(() => {
-        loadAllMainServicesSubServices({ id: service._id });
-    }, []);
+    useEffect(() => {}, []);
     return (
         <div
             className={`transition-all duration-500 rounded-s-lg p-5 flex flex-col items-center justify-center h-full
@@ -152,28 +221,7 @@ const Slide = ({
             ref={ref}
         >
             <h1 className="w-fit mx-auto text-5xl font-arabic font-bold">{service.name}</h1>
-            <div className="my-5 flex flex-wrap flex-col gap-2 p-5">
-                {subServices && (
-                    <For each={subServices?.services}>
-                        {(item, i) => (
-                            <div
-                                className={
-                                    'font-arabic text-xl px-4 py-3 border border-solid border-primary rounded-lg relative overflow-hidden cursor-pointer group z-[250]'
-                                }
-                                key={i}
-                                onClick={() => setSubServiceID(item._id)}
-                            >
-                                <div
-                                    className={`absolute w-full h-full -z-10 bg-primary inset-0 -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ${
-                                        item._id === subServiceID ? 'translate-x-0' : '-translate-x-full'
-                                    }`}
-                                />
-                                {item.name}
-                            </div>
-                        )}
-                    </For>
-                )}
-            </div>
+            <div className="my-5 flex flex-wrap flex-col gap-2 p-5"></div>
         </div>
     );
 };

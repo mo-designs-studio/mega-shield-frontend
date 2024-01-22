@@ -14,3 +14,10 @@ export const deleteCookies = (name: string) => {
     const expiredDate = date.setDate(date.getDate() - 1);
     document.cookie = `${name}=; expires=${expiredDate}`;
 };
+
+import { CarSizes } from "@/types";
+
+export const getEnumValue = (value: string) => {
+    const index = Object.keys(CarSizes).indexOf(value);
+    return Object.values(CarSizes)[index];
+}
