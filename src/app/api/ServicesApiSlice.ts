@@ -100,16 +100,16 @@ const ServicesApiSlice = apiSlice.injectEndpoints({
         //   }),
         //   providesTags: ["mainServices"],
         // }),
-        GetSubServices: builder.query<{ services: Service[]; count: number }, { id: string }>({
-            query: (args) => ({
-                url: `/services/main-service-sub-services/${args.id}`,
-                credentials: 'include',
-                headers: {
-                    'Content-type': 'application/json',
-                },
-            }),
-            providesTags: ['mainServices', 'subServices'],
-        }),
+        // GetSubServices: builder.query<{ services: Service[]; count: number }, { id: string }>({
+        //     query: (args) => ({
+        //         url: `/services/main-service-sub-services/${args.id}`,
+        //         credentials: 'include',
+        //         headers: {
+        //             'Content-type': 'application/json',
+        //         },
+        //     }),
+        //     providesTags: ['mainServices', 'subServices'],
+        // }),
         // AddSubService: builder.mutation<
         //   { services: Service[]; count: number },
         //   { service: AddSubServiceProps }
@@ -170,16 +170,16 @@ const ServicesApiSlice = apiSlice.injectEndpoints({
         //     }),
         //     providesTags: ['mainServices', 'subServices'],
         // }),
-        GetSubServicePackages: builder.query<{ packages: Package[]; count: number }, { id: string }>({
-            query: (args) => ({
-                url: `/packages/service-packages/${args.id}`,
-                credentials: 'include',
-                headers: {
-                    'Content-type': 'application/json',
-                },
-            }),
-            providesTags: ['mainServices', 'subServices', 'package'],
-        }),
+        // GetSubServicePackages: builder.query<{ packages: Package[]; count: number }, { id: string }>({
+        //     query: (args) => ({
+        //         url: `/packages/service-packages/${args.id}`,
+        //         credentials: 'include',
+        //         headers: {
+        //             'Content-type': 'application/json',
+        //         },
+        //     }),
+        //     providesTags: ['mainServices', 'subServices', 'package'],
+        // }),
         // GetPackageByID: builder.query<Package, { id: string }>({
         //     query: (args) => ({
         //         url: `/packages/${args.id}`,
@@ -190,17 +190,17 @@ const ServicesApiSlice = apiSlice.injectEndpoints({
         //     }),
         //     providesTags: ['mainServices', 'subServices', 'package'],
         // }),
-        DeletePackage: builder.mutation<any, { id: string }>({
-            query: (args) => ({
-                url: `/packages/deletePackage/${args.id}`,
-                credentials: 'include',
-                method: 'DELETE',
-                headers: {
-                    'Content-type': 'application/json',
-                },
-            }),
-            invalidatesTags: ['mainServices', 'subServices', 'package'],
-        }),
+        // DeletePackage: builder.mutation<any, { id: string }>({
+        //     query: (args) => ({
+        //         url: `/packages/deletePackage/${args.id}`,
+        //         credentials: 'include',
+        //         method: 'DELETE',
+        //         headers: {
+        //             'Content-type': 'application/json',
+        //         },
+        //     }),
+        //     invalidatesTags: ['mainServices', 'subServices', 'package'],
+        // }),
         // UpdatePackage: builder.mutation<any, { id: string; props: Partial<PackageProps> }>({
         //     query: (args) => ({
         //         url: `/packages/updatePackage/${args.id}`,
@@ -237,11 +237,11 @@ export const {
     // useGetAllBookingsQuery,
     // useToggleBookingStateToDoneMutation,
     // useGetAllBendingBookingsQuery,
-    useGetSubServicesQuery,
+    // useGetSubServicesQuery,
     // useAddSubServiceMutation,
     // useDeleteSubServiceMutation,
     // useGetSubServiceByIDQuery,
-    useGetSubServicePackagesQuery,
+    // useGetSubServicePackagesQuery,
     // useUpdateSubServiceMutation,
     // useAddPackageMutation,
     // useDeletePackageMutation,

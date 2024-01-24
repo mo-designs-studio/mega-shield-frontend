@@ -4,11 +4,14 @@
     position: absolute;
     display: flex;
     align-items: flex-end;
-    background-color: rgba(0,0,0,.7);
 }
 .packages-container {
+    width: 100%;
+    padding: 2.5em;
     display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
     overflow-x: scroll;
-    column-gap: 50px;
+    column-gap:2em;
     backdrop-filter: blur(10px);
 }

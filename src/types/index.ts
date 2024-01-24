@@ -134,15 +134,20 @@ export type PackageProps = {
     mediumPrice: number;
 };
 
-export interface NewPackageProps extends PackageProps {}
-
 export interface Package extends PackageProps {
     _id: string;
     __v: number;
 }
 
-export enum CarSizes  {
-    small = "صغير",
-    medium = "وسط",
-    large = "كبير",
+export enum CarSizes {
+    small = 'صغير',
+    medium = 'وسط',
+    large = 'كبير',
 }
+
+export type ServicesPackages = {
+    _id: string;
+    name: string;
+    photo: string;
+    packages: Package[]
+};

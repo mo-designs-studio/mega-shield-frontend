@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 import { useStatesStore } from '@/stateStore';
 import { Package } from '@/types';
+import { PlusCircleIcon, MinusCircle } from 'lucide-react';
 
 type packageProps = {
     serviceId: string | undefined;
@@ -22,14 +23,14 @@ const PackageModal = ({ serviceId }: packageProps) => {
     const [smallPrice, setSmallPrice] = useState(0);
     const [mediumPrice, setMediumPrice] = useState(0);
     const [bigPrice, setBigPrice] = useState(0);
-    const [features, setFeatures] = useState(new Array(3).fill(''));
+    const [features, setFeatures] = useState(['']);
 
     const resetForm = () => {
         setName('');
         setSmallPrice(0);
         setMediumPrice(0);
         setBigPrice(0);
-        setFeatures(new Array(3).fill(''));
+        setFeatures(['']);
     };
 
     const handleAddClickEvent = () => {
@@ -43,6 +44,10 @@ const PackageModal = ({ serviceId }: packageProps) => {
             },
         });
     };
+
+    useEffect(() => {
+        console.log('Features', features);
+    }, [features]);
 
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
@@ -104,6 +109,7 @@ const PackageModal = ({ serviceId }: packageProps) => {
                     <DialogDescription>
                         <form className="flex flex-col gap-4 text-white">
                             <Input
+                                key={'name'}
                                 type="text"
                                 placeholder="اسم الباقة"
                                 value={name}
@@ -111,60 +117,73 @@ const PackageModal = ({ serviceId }: packageProps) => {
                             />
 
                             <Input
+                                key={'smallPrice'}
                                 type="text"
                                 placeholder="السعر للسيارات الصغيرة"
                                 value={smallPrice}
                                 onChange={(e) => setSmallPrice(+e.target.value)}
                             />
                             <Input
+                                key={'mediumPrice'}
                                 type="text"
                                 placeholder="السعر للسيارات المتوسطة"
                                 value={mediumPrice}
                                 onChange={(e) => setMediumPrice(+e.target.value)}
                             />
                             <Input
+                                key={'bigPrice'}
                                 type="text"
                                 placeholder="السعر للسيارات الكبيرة"
                                 value={bigPrice}
                                 onChange={(e) => setBigPrice(+e.target.value)}
                             />
+                            {features.map((feature, index) => (
+                                <div className="flex gap-x-5" key={index}>
+                                    <div className="flex flex-1 items-center">
+                                        <Input
+                                            type="text"
+                                            placeholder="وصف الميزة"
+                                            value={feature || ''}
+                                            onChange={(e) => {
+                                                setFeatures((prev) => {
+                                                    prev[index] = e.target.value;
+                                                    return [...prev];
+                                                });
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="flex items-center gap-x-5">
+                                        <Button
+                                            className="bg-blue-400 hover:bg-blue-600"
+                                            type="button"
+                                            size="sm"
+                                            onClick={() =>
+                                                setFeatures((previous) => {
+                                                    return [...previous, ''];
+                                                })
+                                            }
+                                        >
+                                            <PlusCircleIcon />
+                                        </Button>
+                                        <Button
+                                            className=""
+                                            type="button"
+                                            size="sm"
+                                            disabled={index == 0}
+                                            onClick={() =>
+                                                setFeatures((previous) => {
+                                                    const array = [...previous];
+                                                    array.splice(index, 1);
+                                                    return array;
+                                                })
+                                            }
+                                        >
+                                            <MinusCircle />
+                                        </Button>
+                                    </div>
+                                </div>
+                            ))}
 
-                            <Input
-                                type="text"
-                                placeholder="الميزة الاولي"
-                                value={features[0] || ''}
-                                onChange={(e) => {
-                                    setFeatures((prev) => {
-                                        prev[0] = e.target.value;
-
-                                        return [...prev];
-                                    });
-                                }}
-                            />
-                            <Input
-                                type="text"
-                                placeholder="الميزة الثانية"
-                                value={features[1] || ''}
-                                onChange={(e) => {
-                                    setFeatures((prev) => {
-                                        prev[1] = e.target.value;
-
-                                        return [...prev];
-                                    });
-                                }}
-                            />
-                            <Input
-                                type="text"
-                                placeholder="الميزة الثالثة"
-                                value={features[2] || ''}
-                                onChange={(e) => {
-                                    setFeatures((prev) => {
-                                        prev[2] = e.target.value;
-
-                                        return [...prev];
-                                    });
-                                }}
-                            />
                             <div className="grid grid-flow-col gap-x-5 ">
                                 <Button className="w-1/1" type="submit" onClick={handleSubmit}>
                                     {modalState.mode == 'add' ? 'إضافة' : 'تعديل'}

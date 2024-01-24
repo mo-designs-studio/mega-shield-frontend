@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { ServicesSlider } from '.';
 import { getAllMainServicesPackages } from '@/api/endpoints/packages';
-import { CarSizes } from '@/types';
+import { CarSizes, ServicesPackages } from '@/types';
 
 type PackagesProps = {
+    packages: { title: string; price: number }[];
     setPackages: React.Dispatch<React.SetStateAction<{ title: string; price: number }[]>>;
     carSize: CarSizes;
 };
 
-const Packages = ({ setPackages, carSize }: PackagesProps) => {
-    const [ setSubServiceID] = useState<string | null>(null);
-    const [data, setData] = useState([]);
+const Packages = ({packages,  setPackages, carSize }: PackagesProps) => {
+    const [data, setData] = useState<ServicesPackages[]>([]);
 
-    useEffect(() => {
-        console.log('data', data);
-    }, [data]);
     const getAllPackages = async () => {
         const allPackeges = await getAllMainServicesPackages({ type: 'main' });
         setData(allPackeges.response.data.services);
@@ -25,7 +22,7 @@ const Packages = ({ setPackages, carSize }: PackagesProps) => {
 
     return (
         <div className="text-center">
-            <ServicesSlider data={data} size={carSize} />
+            <ServicesSlider data={data} size={carSize} packages={packages} setPackages={setPackages} />
         </div>
     );
 };

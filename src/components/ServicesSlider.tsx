@@ -1,25 +1,22 @@
 import useCarousel from '@/hooks/useCarousel';
-import { useEffect, useRef, useState } from 'react';
-import { CarSizes, MainService } from '@/types';
+import { useRef } from 'react';
+import { CarSizes, ServicesPackages } from '@/types';
 import ServicePackageCard from './ServicePackageCard';
 import '../../public/css/style.css';
 
 type ServicesProps = {
     size: string;
-    data: any[];
+    data: ServicesPackages[];
+    packages: { title: string; price: number }[];
+    setPackages: React.Dispatch<React.SetStateAction<{ title: string; price: number }[]>>;
 };
 
-const ServicesSlider = ({ data, size }: ServicesProps) => {
-
+const ServicesSlider = ({ data, size, packages, setPackages }: ServicesProps) => {
     const { next, page, prev } = useCarousel({
         time: 3000,
         pages: data.length,
         autoPlay: false,
     });
-
-    useEffect(() => {
-        console.log('data services slider', data);
-    }, [data]);
 
     return (
         <div className="relative">
@@ -32,7 +29,15 @@ const ServicesSlider = ({ data, size }: ServicesProps) => {
                 >
                     {data &&
                         data.length > 0 &&
-                        data.map((service) => <Slide key={service._id} service={service} size={size} />)}
+                        data.map((service) => (
+                            <Slide
+                                key={service._id}
+                                service={service}
+                                size={size}
+                                packages={packages}
+                                setPackages={setPackages}
+                            />
+                        ))}
                 </div>
                 <button onClick={prev} className="absolute z-[150] top-1/2 -translate-y-1/2 left-5 rotate-90">
                     <div className="flex flex-col gap-2 items-center justify-center">
@@ -97,15 +102,16 @@ const ServicesSlider = ({ data, size }: ServicesProps) => {
 export default ServicesSlider;
 
 type SlideProps = {
-    service: MainService;
+    service: ServicesPackages;
     size: string;
+    packages: { title: string; price: number }[];
+    setPackages: React.Dispatch<React.SetStateAction<{ title: string; price: number }[]>>;
 };
 
-const Slide = ({ service, size }: SlideProps) => {
+const Slide = ({ service, size, packages, setPackages }: SlideProps) => {
     const ref = useRef<HTMLDivElement>(null);
     const serverUrl = import.meta.env.VITE_SERVER_URL;
 
-    useEffect(() => {}, []);
     return (
         <div
             className={`transition-all duration-500 rounded-s-lg p-5 flex flex-col items-center justify-center h-full
@@ -121,10 +127,12 @@ const Slide = ({ service, size }: SlideProps) => {
             <div className="service-packages-container">
                 <div className="packages-container">
                     {service.packages.map((pkg) => (
-                        <div className="grid grid-columns px-2 py-8 max-w-[1100px] mx-auto place-items-center">
+                        <div
+                            className="grid grid-columns px-2 py-8 max-w-[1100px] place-items-center"
+                            key={pkg._id}
+                        >
                             <ServicePackageCard
-                                packages={[]}
-                                setPackages={() => {}}
+                                packages={packages}
                                 title={pkg.name}
                                 features={pkg.description}
                                 price={
@@ -134,6 +142,7 @@ const Slide = ({ service, size }: SlideProps) => {
                                         ? pkg.mediumPrice
                                         : pkg.bigPrice
                                 }
+                                setPackages={setPackages}
                             />
                         </div>
                     ))}

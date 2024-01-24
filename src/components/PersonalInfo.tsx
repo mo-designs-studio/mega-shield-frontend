@@ -3,9 +3,10 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { useEffect, useState } from 'react';
 import { useStatesStore } from '@/stateStore';
+import { CarSizes } from '@/types';
 
 type PersonalInfoProps = {
-    carSize: 0 | 1 | 2;
+    carSize:CarSizes;
 
     packages: { title: string; price: number }[];
     setPackages: React.Dispatch<React.SetStateAction<{ title: string; price: number }[]>>;
@@ -31,7 +32,7 @@ const PersonalInfo = ({ carSize, packages }: PersonalInfoProps) => {
     const handleAddBooking = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         addBooking({
-            carSize: carSize === 0 ? 'small' : carSize === 1 ? 'medium' : carSize === 2 ? 'large' : '',
+            carSize: carSize === CarSizes.small ? 'small' : carSize === CarSizes.medium ? 'medium' : carSize === CarSizes.large ? 'large' : '',
             city,
             customerFname: firstName,
             customerLname: lastName,
@@ -107,7 +108,7 @@ const PersonalInfo = ({ carSize, packages }: PersonalInfoProps) => {
                         <CarFront className="text-primary" color="#d80032" size={50} />
                     </div>
                     <span className="font-arabic text-xl font-bold">
-                        {carSize === 0 ? 'صغير' : carSize === 1 ? 'وسط' : 'كبير'}
+                        {carSize === CarSizes.small ? 'صغير' : carSize === CarSizes.medium ? 'وسط' : 'كبير'}
                     </span>
                 </div>
                 <div className="h-52 shadow-box bg-slate-400/20 backdrop-blur-lg rounded-lg z-10 flex flex-col items-center min-w-[150px] p-5">

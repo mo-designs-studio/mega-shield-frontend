@@ -1,24 +1,19 @@
-import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import bigCar from '/big.png';
 import mediumCar from '/medium.png';
 import smallCar from '/small.png';
-import { AdditionalServices, Packages, PersonalInfo } from '@/components';
-import { useStatesStore } from '@/stateStore';
-import { CarSizes, MainService } from '@/types';
+import { Packages, PersonalInfo } from '@/components';
+import { CarSizes } from '@/types';
+import AdditionalServicesPackages from '@/components/home/AdditionalServicesPackages';
 
 const Services = () => {
     const [active, setActive] = useState<CarSizes>(CarSizes.small);
     const [className, setClassName] = useState('opacity-1');
-    const [additionalServices, setAdditionalServices] = useState<MainService[]>([]);
     const [packages, setPackages] = useState<{ title: string; price: number }[]>([]);
-    const { mainServicesState } = useStatesStore();
 
     useEffect(() => {
-        if (mainServicesState) {
-            const filtered = mainServicesState.filter((item) => item.isAdditional);
-            setAdditionalServices(filtered);
-        }
-    }, [mainServicesState]);
+        setPackages([]);
+    }, [active]);
 
     return (
         <section className="text-center py-20 bg-neutral-900">
@@ -59,29 +54,14 @@ const Services = () => {
                 </div>
                 <div className="w-[50vw] aspect-auto mx-auto">
                     <img
-                        src={active === CarSizes.small ? CarSizes.small : active === CarSizes.medium ? CarSizes.medium : CarSizes.large}
+                        src={active === CarSizes.small ? smallCar : active === CarSizes.medium ? mediumCar : bigCar}
                         alt={`car-size-${active}`}
                         className={`${className} transition-all duration-300`}
                     />
                 </div>
             </div>
-            <Packages setPackages={setPackages} carSize={active} />
-            <section className="min-h-screen">
-                <h1 className="text-primary font-arabic font-bold text-2xl my-5">الخدمات الاضافية</h1>
-                {additionalServices.length > 0 ? (
-                    additionalServices.map((service, index) => (
-                        <AdditionalServices
-                            key={index}
-                            carSize={active}
-                            packages={packages}
-                            setPackages={setPackages}
-                            service={service}
-                        />
-                    ))
-                ) : (
-                    <p>لا توجد خدمات إضافية متاحة</p>
-                )}
-            </section>
+            <Packages packages={packages} setPackages={setPackages} carSize={active} />
+            <AdditionalServicesPackages packages={packages} setPackages={setPackages} carSize={active} />
             <PersonalInfo setPackages={setPackages} packages={packages} carSize={active} />
         </section>
     );
