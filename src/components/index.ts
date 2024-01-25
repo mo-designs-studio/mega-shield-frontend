@@ -23,7 +23,7 @@ export { default as Packages } from './Packages';
 export { default as MoreDialog } from './MoreDialog';
 export { default as PersonalInfo } from './PersonalInfo';
 export { default as AuthSheet } from './AuthSheet';
-export { default as ProductModal } from './ProductModal';
+// export { default as ProductModal } from './ProductModal';
 export { default as ServicesSlider } from './ServicesSlider';
 export { default as ServiceModal } from './main-services/ServiceModal';
 export { default as SubServiceModal } from './sub-services/SubServiceModal';

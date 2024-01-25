@@ -79,8 +79,6 @@ export const createApiHandlersSlice: StateCreator<ApiHandlersSlice> = (set, get)
     loadAllAppointments: (payload) => handleGetAllAppointments(payload, get),
     addBooking: (payload) => handleAddBooking(payload, get),
     updateBookingStatus: (payload) => handleUpdateBookingStatus(payload, get),
-
-    
 });
 
 const handleGetInitData: LoadData = async (payload, getState) => {

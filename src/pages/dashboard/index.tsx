@@ -1,30 +1,20 @@
-import { toggleAuth } from '@/app/features/AuthSlice';
-import { useAppDispatch, useAppSelector } from '@/app/hooks';
+
 import { DashboardLinkProps } from '@/types';
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import logo from '/logo.png';
 import { BeatLoader } from 'react-spinners';
-import { IsSidebarOpenSelector, toggleSidebar } from '@/app/features/ProductSlice';
 import { Menu, X } from 'lucide-react';
 import { useStatesStore } from '@/stateStore';
 
 const Dashboard = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const dispatch = useAppDispatch();
-
-    const isSidebarOpen = useAppSelector(IsSidebarOpenSelector);
-    const { user, myProfileHandler } = useStatesStore();
+    const { isSidebarOpen, setIsSidebarOpen, myProfileHandler } = useStatesStore();
 
     useEffect(() => {
         myProfileHandler(null);
         setIsLoading(false);
     }, []);
-
-    useEffect(() => {
-        if (!user) dispatch(toggleAuth(true));
-        else dispatch(toggleAuth(false));
-    }, [user]);
 
     return (
         <div className="flex min-h-screen relative items-stretch">
@@ -41,7 +31,7 @@ const Dashboard = () => {
                 <div className="relative">
                     <X
                         className="absolute top-2 left-2 cursor-pointer text-primary sm:hidden block"
-                        onClick={() => dispatch(toggleSidebar(false))}
+                        onClick={() => setIsSidebarOpen(false)}
                     />
                     <div className="p-5">
                         <img src={logo} alt="logo" />
@@ -57,7 +47,7 @@ const Dashboard = () => {
             <div className="flex-1 p-5 h-screen overflow-y-scroll">
                 <Menu
                     className="text-primary sm:hidden block cursor-pointer"
-                    onClick={() => dispatch(toggleSidebar(true))}
+                    onClick={() => setIsSidebarOpen(true)}
                     size={25}
                 />
                 <div>

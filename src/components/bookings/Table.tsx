@@ -2,7 +2,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { For } from '@dev-amr/react-sugartax';
 import { Button } from '../ui/button';
 import { useStatesStore } from '@/stateStore';
-import { Booking, CarSizes } from '@/types';
+import { Booking } from '@/types';
 import { getEnumValue } from '@/app/helpers';
 
 type ContentTableProps = {
@@ -13,7 +13,6 @@ type ContentTableProps = {
 const ContentTable = ({ headers, bookings }: ContentTableProps) => {
 
     const { updateBookingStatus } = useStatesStore();
-    console.log(CarSizes)
     return (
         <>
             <Table className="font-arabic my-5 min-w-[767px]">

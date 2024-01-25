@@ -6,7 +6,7 @@ import { useStatesStore } from '@/stateStore';
 import { CarSizes } from '@/types';
 
 type PersonalInfoProps = {
-    carSize:CarSizes;
+    carSize: CarSizes;
 
     packages: { title: string; price: number }[];
     setPackages: React.Dispatch<React.SetStateAction<{ title: string; price: number }[]>>;
@@ -27,12 +27,18 @@ const PersonalInfo = ({ carSize, packages }: PersonalInfoProps) => {
             setPackagesName((prev) => [...prev, item.title]);
         });
     }, [packages]);
-    useEffect(() => console.log('packagesName', packagesName), [packagesName]);
 
     const handleAddBooking = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         addBooking({
-            carSize: carSize === CarSizes.small ? 'small' : carSize === CarSizes.medium ? 'medium' : carSize === CarSizes.large ? 'large' : '',
+            carSize:
+                carSize === CarSizes.small
+                    ? 'small'
+                    : carSize === CarSizes.medium
+                    ? 'medium'
+                    : carSize === CarSizes.large
+                    ? 'large'
+                    : '',
             city,
             customerFname: firstName,
             customerLname: lastName,
