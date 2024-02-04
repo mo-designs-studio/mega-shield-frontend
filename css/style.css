@@ -1,0 +1,17 @@
+.service-packages-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    align-items: flex-end;
+}
+.packages-container {
+    width: 100%;
+    padding: 2.5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow-x: scroll;
+    column-gap:2em;
+    backdrop-filter: blur(10px);
+}
