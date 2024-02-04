@@ -4,6 +4,7 @@ import path from "path"
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "mega-shield-frontend",
   plugins: [react()],
   server: {
     host: true,
