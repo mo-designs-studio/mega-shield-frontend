@@ -1,8 +1,8 @@
 import { LoadData } from '.';
-import { addBooking, getAllAppointments, getPendingAppointment, updateStatusToDone } from '@/api/endpoints';
+import { addBooking, getAllAppointments,  updateStatusToDone } from '@/api/endpoints';
 import { toast } from 'react-toastify';
 
-export const handleGetAllAppointments: LoadData = async (payload, getState) => {
+export const handleGetAllAppointments: LoadData = async (_, getState) => {
     const { setBookingsState, setIsLoading } = getState!();
     setIsLoading(true);
     const { response, error } = await getAllAppointments();
@@ -15,8 +15,7 @@ export const handleGetAllAppointments: LoadData = async (payload, getState) => {
     setIsLoading(false);
 };
 
-export const handleGetPendingAppointments: LoadData = async (payload, getState) => {};
-export const handleAddBooking: LoadData = async (payload, getState) => {
+export const handleAddBooking: LoadData = async (payload, _) => {
     const { response, error } = await addBooking(payload);
     if (!error && response.status == 201) {
         toast('تم اتمام حجزك بنجاح', { type: 'success' });
@@ -37,11 +36,3 @@ export const handleUpdateBookingStatus: LoadData = async (payload, getState) => 
     }
 };
 
-// export const handleDeletePackage: LoadData = async (payload, getState) => {
-//     const { packagesState, setPackagesState } = getState!();
-//     const { response, error } = await deletePackage(payload);
-//     if (!error && response.status == 200) {
-//         const updatedState = packagesState.filter((pkg: any) => pkg._id != payload.id);
-//         setPackagesState(updatedState);
-//     }
-// };

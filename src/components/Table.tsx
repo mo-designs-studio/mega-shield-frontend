@@ -1,13 +1,8 @@
-import { useDeletePackageMutation, useToggleBookingStateToDoneMutation } from '@/app/api/ServicesApiSlice';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Booking, MainService, Package, Service } from '@/types';
 import { For } from '@dev-amr/react-sugartax';
 import { Button } from './ui/button';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { useAppDispatch } from '@/app/hooks';
-import { toggleEditSubServiceModal } from '@/app/features/ProductSlice';
-import { useStatesStore } from '@/stateStore';
 
 type ContentTableProps =
     | {
@@ -32,15 +27,10 @@ type ContentTableProps =
       };
 
 const ContentTable = ({ headers, mode, items }: ContentTableProps) => {
-    const [id, setId] = useState('');
-    const [subServiceID, setSubServiceID] = useState('');
-    const [toggleState] = useToggleBookingStateToDoneMutation();
-    const [deletePackage] = useDeletePackageMutation();
+  
     const serverdUrl = import.meta.env.VITE_SERVER_URL;
-    const dispatch = useAppDispatch();
 
     const navigate = useNavigate();
-    const { deleteMainService, deleteSubService } = useStatesStore();
     return (
         <>
             <Table className="font-arabic my-5 min-w-[767px]">
@@ -76,17 +66,12 @@ const ContentTable = ({ headers, mode, items }: ContentTableProps) => {
                                   <TableCell className="">
                                       <div className="flex items-center gap-4 flex-wrap text-primary justify-center">
                                           <Button
-                                              onClick={() => {
-                                                  deleteSubService({ id: item._id });
-                                              }}
+                                              onClick={() => {}}
                                           >
                                               حذف
                                           </Button>
                                           <Button
-                                              onClick={() => {
-                                                  setSubServiceID(item._id);
-                                                  dispatch(toggleEditSubServiceModal(true));
-                                              }}
+                                              onClick={() => {}}
                                           >
                                               تعديل
                                           </Button>
@@ -128,9 +113,7 @@ const ContentTable = ({ headers, mode, items }: ContentTableProps) => {
                                   <TableCell className="">
                                       <div className="flex items-center gap-4 flex-wrap text-primary justify-center">
                                           <Button
-                                              onClick={() => {
-                                                  deletePackage({ id: item._id });
-                                              }}
+                                              onClick={() => {}}
                                           >
                                               حذف
                                           </Button>

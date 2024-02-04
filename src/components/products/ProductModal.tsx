@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 import { useStatesStore } from '@/stateStore';
-import { MainService, Product } from '@/types';
+import { Product } from '@/types';
 import imageCompression from 'browser-image-compression';
 
 const ProductModal = () => {
