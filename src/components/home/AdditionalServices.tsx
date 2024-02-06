@@ -2,13 +2,11 @@ import { CarSizes, ServicesPackages } from '@/types';
 import AdditionalServicePackageCard from './AdditionalServicePackageCard';
 
 type PackagesProps = {
-    packages: { title: string; price: number }[];
     servicePackages: ServicesPackages;
-    setPackages: React.Dispatch<React.SetStateAction<{ title: string; price: number }[]>>;
     carSize: CarSizes;
 };
 
-const AdditionalServices = ({ servicePackages, packages, setPackages, carSize }: PackagesProps) => {
+const AdditionalServices = ({ servicePackages, carSize }: PackagesProps) => {
     const serverUrl = import.meta.env.VITE_SERVER_URL;
 
     return (
@@ -35,8 +33,6 @@ const AdditionalServices = ({ servicePackages, packages, setPackages, carSize }:
                             }
                             servicePackage={pkg}
                             key={pkg._id}
-                            packages={packages}
-                            setPackages={setPackages}
                         />
                     ))}
                     </div>

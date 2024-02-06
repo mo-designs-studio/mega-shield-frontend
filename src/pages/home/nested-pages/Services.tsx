@@ -1,15 +1,32 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, createContext, useEffect, useState } from 'react';
 import bigCar from '/big.png';
 import mediumCar from '/medium.png';
 import smallCar from '/small.png';
 import { Packages, PersonalInfo } from '@/components';
 import { CarSizes } from '@/types';
 import AdditionalServicesPackages from '@/components/home/AdditionalServicesPackages';
+interface DataContextType {
+    packages?: { title: string; price: number }[];
+    setPackages?: React.Dispatch<React.SetStateAction<{ title: string; price: number }[]>>;
+    packagesCounter?: number;
+    setPackagesCounter?: React.Dispatch<React.SetStateAction<number>>;
+    active?: CarSizes;
+    setActive?: React.Dispatch<React.SetStateAction<CarSizes>>;
+}
+export const DataContext = createContext<DataContextType>({
+    packages: [],
+    setPackages: () => {},
+    packagesCounter: 0,
+    setPackagesCounter: () => {},
+    active: CarSizes.small,
+    setActive: () => {},
+});
 
 const Services = () => {
     const [active, setActive] = useState<CarSizes>(CarSizes.small);
     const [className, setClassName] = useState('opacity-1');
     const [packages, setPackages] = useState<{ title: string; price: number }[]>([]);
+    const [packagesCounter, setPackagesCounter] = useState(0);
 
     useEffect(() => {
         setPackages([]);
@@ -60,9 +77,11 @@ const Services = () => {
                     />
                 </div>
             </div>
-            <Packages packages={packages} setPackages={setPackages} carSize={active} />
-            <AdditionalServicesPackages packages={packages} setPackages={setPackages} carSize={active} />
-            <PersonalInfo setPackages={setPackages} packages={packages} carSize={active} />
+            <DataContext.Provider value={{packages, setPackages, packagesCounter, setPackagesCounter, active, setActive }}>
+                <Packages carSize={active} />
+                <AdditionalServicesPackages carSize={active} />
+                <PersonalInfo carSize={active} />
+            </DataContext.Provider>
         </section>
     );
 };

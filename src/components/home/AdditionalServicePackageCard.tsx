@@ -1,18 +1,12 @@
 import { Package } from '@/types';
 import { Check } from 'lucide-react';
 import { Button } from '../ui/button';
+import { useContext } from 'react';
+import { DataContext } from '@/pages/home/nested-pages/Services';
 
-const AdditionalServicePackageCard = ({
-    servicePackage,
-    packages,
-    setPackages,
-    price,
-}: {
-    servicePackage: Package;
-    packages: { title: string; price: number }[];
-    setPackages: React.Dispatch<React.SetStateAction<{ title: string; price: number }[]>>;
-    price: number;
-}) => {
+const AdditionalServicePackageCard = ({ servicePackage, price }: { servicePackage: Package; price: number }) => {
+    const { packages, setPackages, packagesCounter } = useContext(DataContext);
+
     return (
         <div
             style={{
@@ -37,9 +31,10 @@ const AdditionalServicePackageCard = ({
 
                 <Button
                     className="font-arabic"
+                    disabled={packagesCounter === 0}
                     onClick={() => {
-                        if (!packages.find((item) => item.title === servicePackage.name)) {
-                            setPackages((prev) => [
+                        if (!packages!.find((item) => item.title === servicePackage.name)) {
+                            setPackages!((prev) => [
                                 ...prev,
                                 {
                                     title: servicePackage.name,
@@ -47,13 +42,13 @@ const AdditionalServicePackageCard = ({
                                 },
                             ]);
                         } else {
-                            const filteredPackages = packages.filter((item) => item.title !== servicePackage.name);
+                            const filteredPackages = packages!.filter((item) => item.title !== servicePackage.name);
 
-                            setPackages(filteredPackages);
+                            setPackages!(filteredPackages);
                         }
                     }}
                 >
-                    {packages.find((item) => item.title === servicePackage.name) ? (
+                    {packages!.find((item) => item.title === servicePackage.name) ? (
                         <Check className="text-green-500" />
                     ) : (
                         'اضافة'

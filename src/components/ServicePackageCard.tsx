@@ -1,6 +1,7 @@
 import { Check, ClipboardCheck } from 'lucide-react';
 import { Button } from './ui/button';
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
+import { DataContext } from '@/pages/home/nested-pages/Services';
 
 const packImagesURLS = ['/pack-1.jpg', '/pack-2.jpg', '/pack-3.jpg'];
 
@@ -8,12 +9,11 @@ type ServicePackageCardProps = {
     title: string;
     features: string[];
     price: number | string;
-    packages: { title: string; price: number }[];
-    setPackages: React.Dispatch<React.SetStateAction<{ title: string; price: number }[]>>;
 };
 
-const ServicePackageCard = ({ title, features, price, packages, setPackages }: ServicePackageCardProps) => {
+const ServicePackageCard = ({ title, features, price }: ServicePackageCardProps) => {
     const random = useMemo(() => Math.floor(Math.random() * 3), []);
+    const { packages, setPackages, packagesCounter, setPackagesCounter } = useContext(DataContext);
     return (
         <div className="overflow-hidden relative flex flex-col rounded-lg w-[300px] h-[500px]">
             <div
@@ -43,19 +43,20 @@ const ServicePackageCard = ({ title, features, price, packages, setPackages }: S
                 </div>
                 <Button
                     className={` font-arabic text-xl w-full flex items-center mt-auto justify-center ${
-                        packages.filter((p) => p.title === title).length > 0 ? 'bg-green-600 hover:bg-green-600' : ''
+                        packages!.filter((p) => p.title === title).length > 0 ? 'bg-green-600 hover:bg-green-600' : ''
                     } bg-transparent border-2 border-solid border-primary`}
                     onClick={() => {
-                        if (!packages.find((item) => item.title === title)) {
-                            setPackages((prev) => [...prev, { title: title, price: +price }]);
+                        if (!packages!.find((item) => item.title === title)) {
+                            setPackages!((prev) => [...prev, { title: title, price: +price }]);
+                            setPackagesCounter!(packagesCounter! + 1);
                         } else {
-                            const filteredPackages = packages.filter((item) => item.title !== title);
-
-                            setPackages(filteredPackages);
+                            const filteredPackages = packages!.filter((item) => item.title !== title);
+                            setPackagesCounter!(packagesCounter! - 1);
+                            setPackages!(filteredPackages);
                         }
                     }}
                 >
-                    {packages.filter((p) => p.title === title).length > 0 ? (
+                    {packages!.filter((p) => p.title === title).length > 0 ? (
                         <ClipboardCheck className="text-primary" color="#d80032" />
                     ) : (
                         'أحجز الأن'

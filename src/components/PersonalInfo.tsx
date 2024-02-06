@@ -1,18 +1,17 @@
 import { CarFront } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useStatesStore } from '@/stateStore';
 import { CarSizes } from '@/types';
+import { DataContext } from '@/pages/home/nested-pages/Services';
 
 type PersonalInfoProps = {
     carSize: CarSizes;
-
-    packages: { title: string; price: number }[];
-    setPackages: React.Dispatch<React.SetStateAction<{ title: string; price: number }[]>>;
 };
 
-const PersonalInfo = ({ carSize, packages }: PersonalInfoProps) => {
+const PersonalInfo = ({ carSize }: PersonalInfoProps) => {
+    const { packages } = useContext(DataContext);
     const [packagesName, setPackagesName] = useState<string[]>([]);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -23,7 +22,7 @@ const PersonalInfo = ({ carSize, packages }: PersonalInfoProps) => {
 
     useEffect(() => {
         setPackagesName([]);
-        packages.forEach((item) => {
+        packages!.forEach((item) => {
             setPackagesName((prev) => [...prev, item.title]);
         });
     }, [packages]);
@@ -130,7 +129,9 @@ const PersonalInfo = ({ carSize, packages }: PersonalInfoProps) => {
                 </div>
                 <div className="h-52 shadow-box bg-slate-400/20 backdrop-blur-lg rounded-lg z-10 flex flex-col items-center min-w-[150px] p-5">
                     <h1 className="w-fit mx-auto text-xl font-bold text-primary font-arabic">السعر الاجمالي</h1>
-                    <span className=" font-arabic text-2xl my-auto">{packages.reduce((a, b) => a + +b.price, 0)}$</span>
+                    <span className=" font-arabic text-2xl my-auto">
+                        {packages!.reduce((a, b) => a + +b.price, 0)}$
+                    </span>
                 </div>
                 <div className="h-52 shadow-box bg-slate-400/20 backdrop-blur-lg rounded-lg z-10 flex flex-col items-center min-w-[150px] p-5">
                     <h1 className="w-fit mx-auto text-xl font-bold text-primary font-arabic">تاريخ و توقيت الحجز</h1>

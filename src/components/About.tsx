@@ -41,7 +41,7 @@ const About = () => {
         </svg>
       </div>
 
-      {mainServicesState &&
+      {mainServicesState.length > 0 &&
         mainServicesState.map((item: MainService, i) => (
           <Slide
             isOpen={isOpen}

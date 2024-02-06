@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ServicesSlider } from '.';
 import { getAllMainServicesPackages } from '@/api/endpoints/packages';
 import { CarSizes, ServicesPackages } from '@/types';
 
 type PackagesProps = {
-    packages: { title: string; price: number }[];
-    setPackages: React.Dispatch<React.SetStateAction<{ title: string; price: number }[]>>;
     carSize: CarSizes;
 };
 
-const Packages = ({packages,  setPackages, carSize }: PackagesProps) => {
+const Packages = ({ carSize }: PackagesProps) => {
     const [data, setData] = useState<ServicesPackages[]>([]);
 
     const getAllPackages = async () => {
@@ -22,7 +20,7 @@ const Packages = ({packages,  setPackages, carSize }: PackagesProps) => {
 
     return (
         <div className="text-center">
-            <ServicesSlider data={data} size={carSize} packages={packages} setPackages={setPackages} />
+            <ServicesSlider data={data} size={carSize} />
         </div>
     );
 };

@@ -4,12 +4,10 @@ import { useEffect, useState } from "react";
 import AdditionalServices from "./AdditionalServices";
 
 type PackagesProps = {
-    packages:{ title: string; price: number }[];
-    setPackages: React.Dispatch<React.SetStateAction<{ title: string; price: number }[]>>;
     carSize: CarSizes;
 };
 
-const AdditionalServicesPackages = ({packages, carSize, setPackages}: PackagesProps) => {
+const AdditionalServicesPackages = ({carSize }: PackagesProps) => {
     const [data, setData] = useState<ServicesPackages[]>([]);
 
     const getAllPackages = async () => {
@@ -28,8 +26,6 @@ const AdditionalServicesPackages = ({packages, carSize, setPackages}: PackagesPr
                 key={index}
                 carSize={carSize}
                 servicePackages={service}
-                setPackages={setPackages}
-                packages={packages}
             />
         ))
     ) : (

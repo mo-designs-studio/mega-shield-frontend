@@ -45,10 +45,6 @@ const PackageModal = ({ serviceId }: packageProps) => {
         });
     };
 
-    useEffect(() => {
-        console.log('Features', features);
-    }, [features]);
-
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         if (modalState.mode == 'add') {
